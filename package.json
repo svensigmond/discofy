@@ -1,0 +1,31 @@
+{
+  "name": "discofy",
+  "version": "0.1.0",
+  "scripts": {
+    "build:clean": "rimraf dist/css/*, dist/js/*",
+    "prebuild": "npm run build:clean",
+    "build": "npm run sass:build && npm run build:bundle",
+    "sass:build": "node-sass source/scss/ -o dist/css/ --output-style uncompressed",
+    "sass:watch": "npm run sass:build -- -w",
+    "browsersync": "browser-sync start --files \"dist/css/*.css, *.html, dist/js/*.js\" --server",
+    "start": "parallelshell \"npm run sass:build\" \"npm run sass:watch\" \"npm run watch:bundle\" \"npm run browsersync\"",
+    "build:bundle": "browserify source/js/app.js -o dist/js/bundle.js",
+    "watch:bundle": "watchify source/js/app.js -o dist/js/bundle.js -v"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.18.8",
+    "browserify": "^14.1.0",
+    "eslint": "^3.18.0",
+    "node-sass": "^4.5.2",
+    "parallelshell": "^2.0.0",
+    "rimraf": "^2.6.1",
+    "stylelint": "^7.9.0",
+    "stylelint-config-vi": "^1.0.5",
+    "watchify": "^3.9.0"
+  },
+  "private": true,
+  "dependencies": {
+    "ezpz-grid": "^3.0.1",
+    "moonjs": "^0.7.1"
+  }
+}

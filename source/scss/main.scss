@@ -1,0 +1,8 @@
+@charset 'utf-8';
+
+$ezpz-grid-type: 				'fractions';
+$ezpz-grid-align:				true;
+$ezpz-cell-align:				true;
+$ezpz-grid-wrap:				true;
+
+@import './node_modules/ezpz-grid/lib/ezpz-flexbox-grid';
