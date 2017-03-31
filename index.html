@@ -9,8 +9,22 @@
         <link rel="stylesheet" href="./dist/css/main.css" />
     </head>
     <body>
-        <h1>Discofy</h1>
+        <div id="js-discofy">
+            <h1>Discofy</h1>
 
+            <input type="text" autofocus m-on:keyup.enter="getData" value="edw1n">
+
+            <div>
+                <img m-if="{{avatar}}" src="{{avatar}}" alt="{{name}}">
+                <span m-if="{{name}}">{{name}}</p></span>
+            </div>
+
+            <ul m-if="{{collection.length}}">
+                <component-album m-for="album in {{collection}}" artist="{{album.artist}}" title="{{album.title}}"></component-album>
+            </ul>
+        </div>
+
+        <script src="//unpkg.com/moonjs"></script>
         <script src="dist/js/bundle.js"></script>
     </body>
 </html>
