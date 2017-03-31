@@ -21,11 +21,21 @@ const discogs = new Discogs();
 
 
 Moon.component("component-album", {
-	props: ['title', 'artist'],
-	template: '<li>{{title}} {{artist}}</li>',
+	props: ['album'],
+	template: '<li>{{title}}</li>',
 	hooks: {
+		init() {
+			console.log('init');
+		},
 		mounted() {
-			//console.log(typeof this.get('albums'));
+			const album = JSON.parse(this.get('album'));
+
+			this.set('title', album.title);
+
+			console.log('mounted');
+		},
+		updated() {
+			console.log('updated');
 		}
 	}
 });
@@ -58,19 +68,15 @@ const discofy = new Moon({
 		setCollectionData: function() {
 			discogs.getCollectionData(this.get('id'))
 			.then((response) => {
-				const test = [
-					{
-						title: 'sticky fingers',
-						artist: 'stones'
-					},
-					{
-						title: 'hunky dory',
-						artist: 'bowie'
-					}
-				];
+				const collection = [];
 
-				//this.set('collection', response.releases)
-				this.set('collection', test);
+				response.releases.forEach((release) => {
+					collection.push(
+						JSON.stringify(release.basic_information)
+					);
+				});
+
+				this.set('collection', collection);
 			});
 		}
 	}

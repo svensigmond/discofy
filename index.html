@@ -20,7 +20,7 @@
             </div>
 
             <ul m-if="{{collection.length}}">
-                <component-album m-for="album in {{collection}}" artist="{{album.artist}}" title="{{album.title}}"></component-album>
+                <component-album m-for="album in {{collection}}" album="{{album}}"></component-album>
             </ul>
         </div>
 
