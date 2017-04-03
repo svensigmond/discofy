@@ -20,34 +20,23 @@ class Discogs {
 const discogs = new Discogs();
 
 
-Moon.component("component-album", {
-	props: ['album'],
-	template: '<li>{{title}}</li>',
+const discofy = new Moon({
+	el: '#js-discofy',
+	data: {
+		id: null,
+		user: {},
+		collection: [],
+	},
 	hooks: {
 		init() {
 			console.log('init');
 		},
 		mounted() {
-			const album = JSON.parse(this.get('album'));
-
-			this.set('title', album.title);
-
 			console.log('mounted');
 		},
 		updated() {
 			console.log('updated');
 		}
-	}
-});
-
-
-const discofy = new Moon({
-	el: '#js-discofy',
-	data: {
-		id: '',
-		name: '',
-		avatar: '',
-		collection: []
 	},
 	methods: {
 		getData(e) {
@@ -57,26 +46,32 @@ const discofy = new Moon({
 			this.callMethod('setCollectionData');
 		},
 
-		setUserData: function() {
+		setUserData() {
 			discogs.getUserData(this.get('id'))
 			.then((response) => {
-				discofy.set('name', response.name);
-				discofy.set('avatar', response.avatar_url);
+				this.set('user', {
+					name: response.name,
+					avatar: response.avatar_url,
+				});
 			});
 		},
 
-		setCollectionData: function() {
+		setCollectionData() {
 			discogs.getCollectionData(this.get('id'))
 			.then((response) => {
-				const collection = [];
+				const releases = response.releases;
+				const albums = releases.map((release) => {
+					const info = release.basic_information;
+					const album = {
+						artists: info.artists.map((artist) => artist.name).join(', '),
+						title: info.title,
+						year: info.year > 0 ? info.year : 'Not specified',
+					};
 
-				response.releases.forEach((release) => {
-					collection.push(
-						JSON.stringify(release.basic_information)
-					);
+					return album;
 				});
 
-				this.set('collection', collection);
+				this.set('collection', albums);
 			});
 		}
 	}

@@ -14,17 +14,18 @@
 
             <input type="text" autofocus m-on:keyup.enter="getData" value="edw1n">
 
-            <div>
-                <img m-if="{{avatar}}" src="{{avatar}}" alt="{{name}}">
-                <span m-if="{{name}}">{{name}}</p></span>
-            </div>
+            <h1 m-show="{{id}}">Results for: {{id}}</h1>
+            <img m-show ="{{user.avatar}}" src="{{user.avatar}}">
+            <h2 m-show="{{user.name}}">{{user.name}}</h2>
 
-            <ul m-if="{{collection.length}}">
-                <component-album m-for="album in {{collection}}" album="{{album}}"></component-album>
+            <ul m-show="{{collection}}">
+                <li m-for="album in {{collection}}">
+                    {{album.artists}} - {{album.title}} ({{album.year}})
+                </li>
             </ul>
         </div>
 
-        <script src="//unpkg.com/moonjs"></script>
+        <script src="//unpkg.com/moonjs@0.8.0"></script>
         <script src="dist/js/bundle.js"></script>
     </body>
 </html>
