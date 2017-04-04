@@ -36,38 +36,6 @@ const ALBUM_TEMPLATE = `<div class="album" m-on:click="setAlbumData()">
 								<ul m-for="artist in {{album.artists}}">
 									<li>{{artist}}</li>
 								</ul>
-								<div m-if="{{albumDetails}}">
-								<img src="{{albumDetails.art}}">
-
-								<table>
-									<tbody>
-										<tr>
-											<th>Artist:</th>
-											<td>{{albumDetails.artists}}</td>
-										</tr>
-										<tr>
-											<th>Released:</th>
-											<td>{{albumDetails.year}}</td>
-										</tr>
-										<tr>
-											<th>Genre:</th>
-											<td>{{albumDetails.genres}}</td>
-										</tr>
-										<tr>
-											<th>Style:</th>
-											<td>{{albumDetails.styles}}</td>
-										</tr>
-										<tr>
-											<th>Track list:</th>
-											<td>
-												<ul class="list-unstyled" m-if="{{albumDetails.trackList}}">
-													<li m-for="track in {{albumDetails.trackList}}">{{track}}</li>
-												</ul>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-								</div>
 							</div>
 						</div>`;
 
@@ -75,6 +43,48 @@ const USER_TEMPLATE = `<figure class="avatar">
                 			<img src="{{user.avatar}}" alt="{{user.name}}" class="avatar__visual">
                 			<figcaption class="avatar_caption">{{user.name}}, {{user.location}} ({{user.username}})</figcaption>
             			</figure>`;
+
+const ALBUM_DETAILS_TEMPLATE = `<div class="album-details">
+									<img src="{{details.meta.art}}">
+									<table>
+										<tbody>
+ 											<tr>
+ 												<th>Title:</th>
+ 												<td>{{details.title}}</td>
+ 											</tr>
+											<tr>
+												<th>Artists:</th>
+												<td>
+													<ul class="list-unstyled">
+														<li m-for="artist in {{details.artists}}">
+															{{artist}}
+														</li>
+													</ul>
+												</td>
+											</tr>
+ 											<tr>
+ 												<th>Released:</th>
+ 												<td>{{details.year}}</td>
+ 											</tr>
+											<tr>
+												<th>Genre:</th>
+												<td>{{details.meta.genres}}</td>
+											</tr>
+											<tr m-if="{{details.meta.styles}}">
+												<th>Style:</th>
+												<td>{{details.meta.styles}}</td>
+											</tr>
+											<tr>
+												<th>Track list:</th>
+												<td>
+													<ul class="list-unstyled" m-if="{{details.meta.trackList}}">
+														<li m-for="track in {{details.meta.trackList}}">{{track}}</li>
+													</ul>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>`;
 
 const discofy = new Moon({
 	el: '#js-discofy',
@@ -85,13 +95,17 @@ const discofy = new Moon({
 		},
 		collection: [],
 		pagination: {},
-		details: {},
+		details: {
+			show: false,
+		},
 	},
 
 	hooks: {
 		mounted() {
 			this.on('update:details', (data) => {
 				this.set('details', data.album);
+				this.set('details.show', true);
+				console.log(this.get('details'));
 			});
 		},
 	},
@@ -162,7 +176,7 @@ Moon.component('component-album', {
 			.then((response) => {
 				album.meta = {
 					genres: response.genres.join(', '),
-					styles: response.styles.join(', '),
+					styles: response.styles ? response.styles.join(', ') : null,
 					art: response.images[0].uri,
 					trackList: response.tracklist.map((track) => `${track.title}`),
 				};
@@ -174,6 +188,11 @@ Moon.component('component-album', {
 			});
 		},
 	},
+});
+
+Moon.component('component-album-details', {
+	props: ['details'],
+	template: ALBUM_DETAILS_TEMPLATE,
 });
 
 window.discofy = discofy;

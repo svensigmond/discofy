@@ -21,6 +21,15 @@ html {
 	box-sizing: inherit;
 }
 
+img {
+	max-width: 100%;
+}
+
+th {
+	text-align: left;
+	vertical-align: top;
+}
+
 .search {
 	width: 100%;
 	padding: 1rem;
@@ -48,6 +57,11 @@ html {
 	&__visual {
 		margin: 1rem;
 	}
+}
+
+.album-details {
+	position: sticky;
+	top: 1rem;
 }
 
 .avatar {

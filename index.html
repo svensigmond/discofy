@@ -26,7 +26,7 @@
             <button m-if="{{collection.length}}" m-on:click="paginate('prev')" class="js-prev">Previous</button>
             <button m-if="{{collection.length}}" m-on:click="paginate('next')" class="js-next">Next</button>
 
-            <div class="grid grid--wrap grid--content-stretch">
+            <div class="grid grid--wrap">
                 <div class="cell cell--medium-2/3">
                     <div m-if="{{collection.length}}" class="grid grid--wrap grid--content-stretch">
                         <div m-for="album in {{collection}}" class="cell cell--small-1/2">
@@ -34,8 +34,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="cell cell--medium-1/3">
-                    <component-album-details m-literal:album="{{album}}"></component-album>
+                <div class="cell cell--medium-1/3" m-if="{{details.show}}">
+                    <component-album-details m-literal:details="{{details}}"></component-album>
                 </div>
             </div>
         </div>
