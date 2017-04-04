@@ -1,16 +1,23 @@
 class Discogs {
 	constructor(key) {
-		this.baseUrl = 'https://api.discogs.com/';//users/edw1n
+		this.baseUrl = 'https://api.discogs.com/';
+		this.token = 'tCCPbvQBMjhlVMqrIkjKWkpLduNeOXXQgwhWjWQs';
 	}
 
 	getUserData(id) {
-		const url = `${this.baseUrl}/users/${id}`;
+		const url = `${this.baseUrl}users/${id}?token=${this.token}`;
 
 		return fetch(url).then(response => response.json());
 	}
 
 	getCollectionData(id) {
-		const url = `${this.baseUrl}/users/${id}/collection/folders/0/releases`;
+		const url = `${this.baseUrl}users/${id}/collection/folders/0/releases?token=${this.token}`;
+
+		return fetch(url).then(response => response.json());
+	}
+
+	getAlbumData(id) {
+		const url = `${this.baseUrl}releases/${id}?token=${this.token}`;
 
 		return fetch(url).then(response => response.json());
 	}
@@ -24,6 +31,7 @@ const discofy = new Moon({
 	data: {
 		id: null,
 		user: {},
+		albumDetails: {},
 		collection: [],
 	},
 	hooks: {
@@ -35,7 +43,7 @@ const discofy = new Moon({
 		},
 		updated() {
 			console.log('updated');
-		}
+		},
 	},
 	methods: {
 		getData(e) {
@@ -51,7 +59,10 @@ const discofy = new Moon({
 				this.set('user', {
 					name: response.name,
 					avatar: response.avatar_url,
+					ownedAmount: response.num_collection,
 				});
+
+				console.log(response);
 			});
 		},
 
@@ -62,16 +73,37 @@ const discofy = new Moon({
 				const albums = releases.map((release) => {
 					const info = release.basic_information;
 					const album = {
+						id: info.id,
 						artists: info.artists.map((artist) => artist.name).join(', '),
 						title: info.title,
-						year: info.year > 0 ? info.year : 'Not specified',
+						year: info.year > 0 ? info.year : 'Unknown',
 					};
 
 					return album;
 				});
 
 				this.set('collection', albums);
+
+				console.log(response);
 			});
-		}
-	}
+		},
+
+		setAlbumData(album, index) {
+			discogs.getAlbumData(album.id)
+			.then((response) => {
+
+				this.set('albumDetails', {
+					title: album.title,
+					artists: album.artists,
+					year: album.year,
+					genres: response.genres.join(', '),
+					styles: response.styles.join(', '),
+					art: response.images[0].uri,
+					trackList: response.tracklist.map((track) => `${track.title}`),
+				});
+
+				console.log(this.get('albumDetails'));
+			});
+		},
+	},
 });

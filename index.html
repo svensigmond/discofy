@@ -14,15 +14,55 @@
 
             <input type="text" autofocus m-on:keyup.enter="getData" value="edw1n">
 
-            <h1 m-show="{{id}}">Results for: {{id}}</h1>
+            <h1 m-show="{{id}}">{{user.ownedAmount}} results for: {{id}}</h1>
             <img m-show ="{{user.avatar}}" src="{{user.avatar}}">
             <h2 m-show="{{user.name}}">{{user.name}}</h2>
 
-            <ul m-show="{{collection}}">
-                <li m-for="album in {{collection}}">
-                    {{album.artists}} - {{album.title}} ({{album.year}})
-                </li>
-            </ul>
+            <div class="grid">
+                <div class="cell cell--1/2">
+                    <ul class="album-list" m-show="{{collection}}">
+                        <li class="album-list__item" m-for="album,index in {{collection}}" m-on:click="setAlbumData({{album}}, index)">
+                            {{album.artists}} - {{album.title}} ({{album.year}})
+                        </li>
+                    </ul>
+                </div>
+                <div class="cell cell--1/2">
+                    <div m-show="{{albumDetails.title}}">
+                        <h2>{{albumDetails.title}}</h2>
+
+                        <img src="{{albumDetails.art}}">
+
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th>Artist:</th>
+                                    <td>{{albumDetails.artists}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Released:</th>
+                                    <td>{{albumDetails.year}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Genre:</th>
+                                    <td>{{albumDetails.genres}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Style:</th>
+                                    <td>{{albumDetails.styles}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Track list:</th>
+                                    <td>
+                                        <ul class="list-unstyled" m-if="{{albumDetails.trackList}}">
+                                            <li m-for="track in {{albumDetails.trackList}}">{{track}}</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <script src="//unpkg.com/moonjs@0.8.0"></script>

@@ -6,3 +6,24 @@ $ezpz-cell-align:				true;
 $ezpz-grid-wrap:				true;
 
 @import './node_modules/ezpz-grid/lib/ezpz-flexbox-grid';
+
+th {
+	text-align: left;
+	vertical-align: top;
+}
+
+.album-list {
+	&__item {
+		&:hover {
+			background-color: hotpink;
+			cursor: pointer;
+		}
+	}
+}
+
+.list-unstyled {
+	margin: 0;
+	padding: 0;
+
+	list-style: none;
+}
