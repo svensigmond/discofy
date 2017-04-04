@@ -16,8 +16,8 @@
 
             <component-user m-if="{{user.name}}" m-literal:user="{{user}}"></component-user>
 
-            <button m-if="{{collection.length}}" m-on:click="onPrevPage" class="js-prev">⬅️</button>
-            <button m-if="{{collection.length}}" m-on:click="onNextPage" class="js-next">➡️</button>
+            <button m-if="{{collection.length}}" m-on:click="paginate('prev')" class="js-prev">⬅️</button>
+            <button m-if="{{collection.length}}" m-on:click="paginate('next')" class="js-next">➡️</button>
 
             <div class="grid grid--wrap grid--content-stretch">
                 <div class="cell cell--medium-2/3">
