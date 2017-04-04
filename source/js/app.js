@@ -10,8 +10,8 @@ class Discogs {
 		return fetch(url).then(response => response.json());
 	}
 
-	getCollectionData(id) {
-		const url = `${this.baseUrl}users/${id}/collection/folders/0/releases?token=${this.token}`;
+	getCollectionData(id, page) {
+		const url = `${this.baseUrl}users/${id}/collection/folders/0/releases?token=${this.token}&page=${page}`;
 
 		return fetch(url).then(response => response.json());
 	}
@@ -34,17 +34,6 @@ const discofy = new Moon({
 		albumDetails: {},
 		collection: [],
 	},
-	hooks: {
-		init() {
-			console.log('init');
-		},
-		mounted() {
-			console.log('mounted');
-		},
-		updated() {
-			console.log('updated');
-		},
-	},
 	methods: {
 		getData(e) {
 			this.set('id', e.target.value);
@@ -61,13 +50,11 @@ const discofy = new Moon({
 					avatar: response.avatar_url,
 					ownedAmount: response.num_collection,
 				});
-
-				console.log(response);
 			});
 		},
 
-		setCollectionData() {
-			discogs.getCollectionData(this.get('id'))
+		setCollectionData(page = 1) {
+			discogs.getCollectionData(this.get('id'), page)
 			.then((response) => {
 				const releases = response.releases;
 				const albums = releases.map((release) => {
@@ -81,11 +68,28 @@ const discofy = new Moon({
 
 					return album;
 				});
+				const pagination = {
+					page: response.pagination.page,
+					prev: response.pagination.urls.prev ? response.pagination.page - 1 : null,
+					next: response.pagination.urls.next ? response.pagination.page + 1 : null,
+				};
 
 				this.set('collection', albums);
-
-				console.log(response);
+				this.set('pagination', pagination);
 			});
+		},
+
+		paginate(action) {
+			const pagination = this.get('pagination');
+			let page = null;
+
+			if (action === 'next') {
+				page = pagination.next;
+			} else {
+				page = pagination.prev;
+			}
+
+			this.callMethod('setCollectionData', [page]);
 		},
 
 		setAlbumData(album, index) {
@@ -101,8 +105,6 @@ const discofy = new Moon({
 					art: response.images[0].uri,
 					trackList: response.tracklist.map((track) => `${track.title}`),
 				});
-
-				console.log(this.get('albumDetails'));
 			});
 		},
 	},

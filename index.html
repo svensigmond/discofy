@@ -25,6 +25,10 @@
                             {{album.artists}} - {{album.title}} ({{album.year}})
                         </li>
                     </ul>
+
+                    <div m-if="{{pagination}}">
+                        <button type="button" m-on:click="paginate('previous')">Previous</button> <button type="button" m-on:click="paginate('next')">Next</button>
+                    </div>
                 </div>
                 <div class="cell cell--1/2">
                     <div m-show="{{albumDetails.title}}">
