@@ -28,12 +28,12 @@ const { Moon } = window;
 
 const ALBUM_TEMPLATE = `<div class="album" m-on:click="setAlbumData()">
 							<div class="album__visual">
-								<img src="{{album.basic_information.thumb}}" alt="Album">
+								<img src="{{album.thumb}}" alt="Album">
 							</div>
 							<div class="album__body">
-								<h1>{{album.basic_information.title}} <span m-if="{{album.basic_information.year}}">({{album.basic_information.year}})</span></h1>
-								<ul m-for="artist in {{album.basic_information.artists}}">
-									<li>{{artist.name}}</li>
+								<h1>{{album.title}} <span m-if="{{album.year}}">({{album.year}})</span></h1>
+								<ul m-for="artist in {{album.artists}}">
+									<li>{{artist}}</li>
 								</ul>
 								<div m-if="{{albumDetails}}">
 								<img src="{{albumDetails.art}}">
@@ -79,7 +79,9 @@ const discofy = new Moon({
 	el: '#js-discofy',
 	data: {
 		id: 'edw1n',
-		user: {},
+		user: {
+			show: false,
+		},
 		collection: [],
 		pagination: {},
 		details: {},
@@ -98,29 +100,47 @@ const discofy = new Moon({
 			this.callMethod('setUserData');
 			this.callMethod('setCollectionData');
 		},
+
 		setUserData() {
 			discogs.getUserData(this.get('id'))
 			.then((response) => {
 				this.set('user', {
+					show: true,
 					name: response.name,
 					username: response.username,
 					avatar: response.avatar_url,
 					ownedAmount: response.num_collection,
+					location: response.location,
 				});
 			});
 		},
+
 		setCollectionData(url) {
 			discogs.getCollectionData(this.get('id'), url)
 				.then((response) => {
-					this.set('pagination', response.pagination);
-					this.set('collection', response.releases);
+					const { releases } = response;
+					const albums = releases.map((release) => {
+						const info = release.basic_information;
+						const album = {
+							id: info.id,
+							artists: info.artists.map((artist) => artist.name),
+							title: info.title,
+							year: info.year > 0 ? info.year : 'Unknown',
+							thumb: info.thumb,
+						};
+
+						return album;
+					});
+
+					this.set('collection', albums);
+					this.set('pagination', response.pagination.urls);
 				});
 		},
 
 		paginate(action) {
 			const pagination = this.get('pagination');
 
-			this.callMethod('setCollectionData', [pagination.urls[action]]);
+			this.callMethod('setCollectionData', [pagination[action]]);
 		},
 	},
 });
@@ -150,27 +170,6 @@ Moon.component('component-album', {
 			})
 			.then(() => {
 				discofy.emit('update:details', this.$data);
-			});
-		},
-
-		setCollectionData(page = 1) {
-			discogs.getCollectionData(this.get('id'), page)
-			.then((response) => {
-				const { releases } = response;
-				const albums = releases.map((release) => {
-					const info = release.basic_information;
-					const album = {
-						id: info.id,
-						artists: info.artists.map((artist) => artist.name).join(', '),
-						title: info.title,
-						year: info.year > 0 ? info.year : 'Unknown',
-					};
-
-					return album;
-				});
-
-				this.set('collection', albums);
-				this.set('pagination', response.pagination); // TODO cleanup
 			});
 		},
 	},
