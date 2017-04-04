@@ -14,7 +14,6 @@
 
             <input type="text" autofocus m-model="id" m-on:keyup.enter="getData" class="search">
 
-<<<<<<< HEAD
             <component-user m-if="{{user.name}}" m-literal:user="{{user}}"></component-user>
 
             <button m-if="{{collection.length}}" m-on:click="onPrevPage" class="js-prev">⬅️</button>
@@ -35,64 +34,6 @@
         </div>
 
         <script src="//unpkg.com/moonjs@0.7.1"></script>
-=======
-            <h1 m-show="{{id}}">{{user.ownedAmount}} results for: {{id}}</h1>
-            <img m-show ="{{user.avatar}}" src="{{user.avatar}}">
-            <h2 m-show="{{user.name}}">{{user.name}}</h2>
-
-            <div class="grid">
-                <div class="cell cell--1/2">
-                    <ul class="album-list" m-show="{{collection}}">
-                        <li class="album-list__item" m-for="album,index in {{collection}}" m-on:click="setAlbumData({{album}}, index)">
-                            {{album.artists}} - {{album.title}} ({{album.year}})
-                        </li>
-                    </ul>
-
-                    <div m-if="{{pagination}}">
-                        <button type="button" m-on:click="paginate('previous')">Previous</button> <button type="button" m-on:click="paginate('next')">Next</button>
-                    </div>
-                </div>
-                <div class="cell cell--1/2">
-                    <div m-show="{{albumDetails.title}}">
-                        <h2>{{albumDetails.title}}</h2>
-
-                        <img src="{{albumDetails.art}}">
-
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <th>Artist:</th>
-                                    <td>{{albumDetails.artists}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Released:</th>
-                                    <td>{{albumDetails.year}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Genre:</th>
-                                    <td>{{albumDetails.genres}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Style:</th>
-                                    <td>{{albumDetails.styles}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Track list:</th>
-                                    <td>
-                                        <ul class="list-unstyled" m-if="{{albumDetails.trackList}}">
-                                            <li m-for="track in {{albumDetails.trackList}}">{{track}}</li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <script src="//unpkg.com/moonjs@0.8.0"></script>
->>>>>>> 30aa2a9e0ee77cd5197bb799803b7eae1f574717
         <script src="dist/js/bundle.js"></script>
     </body>
 </html>

@@ -1,13 +1,7 @@
 class Discogs {
-<<<<<<< HEAD
 	constructor() {
 		this.token = 'tCCPbvQBMjhlVMqrIkjKWkpLduNeOXXQgwhWjWQs';
 		this.baseUrl = 'https://api.discogs.com/';
-=======
-	constructor(key) {
-		this.baseUrl = 'https://api.discogs.com/';
-		this.token = 'tCCPbvQBMjhlVMqrIkjKWkpLduNeOXXQgwhWjWQs';
->>>>>>> 30aa2a9e0ee77cd5197bb799803b7eae1f574717
 	}
 
 	getUserData(id) {
@@ -16,7 +10,6 @@ class Discogs {
 		return fetch(url).then(response => response.json());
 	}
 
-<<<<<<< HEAD
 	getCollectionData(id, url) {
 		url = url || `${this.baseUrl}/users/${id}/collection/folders/0/releases?page=1&token=${this.token}`;
 
@@ -30,10 +23,8 @@ class Discogs {
 	}
 }
 
-
 const discogs = new Discogs();
 const { Moon } = window;
-// const eventbus = new Moon({});
 
 const ALBUM_TEMPLATE = `<div class="album" m-on:click="setAlbumData()">
 							<div class="album__visual">
@@ -78,43 +69,20 @@ const ALBUM_TEMPLATE = `<div class="album" m-on:click="setAlbumData()">
 								</div>
 							</div>
 						</div>`;
+
 const USER_TEMPLATE = `<figure class="avatar">
-                			<img src="{{user.avatar_url}}" alt="{{user.name}}" class="avatar__visual">
+                			<img src="{{user.avatar}}" alt="{{user.name}}" class="avatar__visual">
                 			<figcaption class="avatar_caption">{{user.name}}, {{user.location}} ({{user.username}})</figcaption>
             			</figure>`;
-=======
-	getCollectionData(id, page) {
-		const url = `${this.baseUrl}users/${id}/collection/folders/0/releases?token=${this.token}&page=${page}`;
-
-		return fetch(url).then(response => response.json());
-	}
-
-	getAlbumData(id) {
-		const url = `${this.baseUrl}releases/${id}?token=${this.token}`;
-
-		return fetch(url).then(response => response.json());
-	}
-}
-
-const discogs = new Discogs();
->>>>>>> 30aa2a9e0ee77cd5197bb799803b7eae1f574717
-
 
 const discofy = new Moon({
 	el: '#js-discofy',
 	data: {
-<<<<<<< HEAD
 		id: 'edw1n',
 		user: {},
 		collection: [],
 		pagination: {},
 		details: {},
-=======
-		id: null,
-		user: {},
-		albumDetails: {},
-		collection: [],
->>>>>>> 30aa2a9e0ee77cd5197bb799803b7eae1f574717
 	},
 
 	hooks: {
@@ -130,24 +98,16 @@ const discofy = new Moon({
 			this.callMethod('setUserData');
 			this.callMethod('setCollectionData');
 		},
-<<<<<<< HEAD
-		setUserData() {
-			discogs.getUserData(this.get('id'))
-				.then((response) => {
-					this.set('user', response);
-				});
-=======
-
 		setUserData() {
 			discogs.getUserData(this.get('id'))
 			.then((response) => {
 				this.set('user', {
 					name: response.name,
+					username: response.username,
 					avatar: response.avatar_url,
 					ownedAmount: response.num_collection,
 				});
 			});
->>>>>>> 30aa2a9e0ee77cd5197bb799803b7eae1f574717
 		},
 		setCollectionData(url) {
 			discogs.getCollectionData(this.get('id'), url)
@@ -156,11 +116,11 @@ const discofy = new Moon({
 					this.set('collection', response.releases);
 				});
 		},
-		onNextPage(e) {
+
+		paginate(action) {
 			const pagination = this.get('pagination');
 
-<<<<<<< HEAD
-			this.callMethod('setCollectionData', [pagination.urls.next]);
+			this.callMethod('setCollectionData', [pagination.urls[action]]);
 		},
 	},
 });
@@ -192,11 +152,11 @@ Moon.component('component-album', {
 				discofy.emit('update:details', this.$data);
 			});
 		},
-=======
+
 		setCollectionData(page = 1) {
 			discogs.getCollectionData(this.get('id'), page)
 			.then((response) => {
-				const releases = response.releases;
+				const { releases } = response;
 				const albums = releases.map((release) => {
 					const info = release.basic_information;
 					const album = {
@@ -208,46 +168,11 @@ Moon.component('component-album', {
 
 					return album;
 				});
-				const pagination = {
-					page: response.pagination.page,
-					prev: response.pagination.urls.prev ? response.pagination.page - 1 : null,
-					next: response.pagination.urls.next ? response.pagination.page + 1 : null,
-				};
 
 				this.set('collection', albums);
-				this.set('pagination', pagination);
+				this.set('pagination', response.pagination); // TODO cleanup
 			});
 		},
-
-		paginate(action) {
-			const pagination = this.get('pagination');
-			let page = null;
-
-			if (action === 'next') {
-				page = pagination.next;
-			} else {
-				page = pagination.prev;
-			}
-
-			this.callMethod('setCollectionData', [page]);
-		},
-
-		setAlbumData(album, index) {
-			discogs.getAlbumData(album.id)
-			.then((response) => {
-
-				this.set('albumDetails', {
-					title: album.title,
-					artists: album.artists,
-					year: album.year,
-					genres: response.genres.join(', '),
-					styles: response.styles.join(', '),
-					art: response.images[0].uri,
-					trackList: response.tracklist.map((track) => `${track.title}`),
-				});
-			});
-		},
->>>>>>> 30aa2a9e0ee77cd5197bb799803b7eae1f574717
 	},
 });
 

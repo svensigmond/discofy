@@ -378,7 +378,6 @@
     .grid > .cell--large-align-baseline {
       align-self: baseline; } }
 
-<<<<<<< HEAD
 html {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; }
   html, html:before, html:after {
@@ -409,17 +408,8 @@ html {
   .avatar__visual {
     max-width: 10rem;
     border-radius: 100%; }
-=======
-th {
-  text-align: left;
-  vertical-align: top; }
-
-.album-list__item:hover {
-  background-color: hotpink;
-  cursor: pointer; }
 
 .list-unstyled {
   margin: 0;
   padding: 0;
   list-style: none; }
->>>>>>> 30aa2a9e0ee77cd5197bb799803b7eae1f574717
