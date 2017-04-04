@@ -1,6 +1,10 @@
 {
   "name": "discofy",
-  "version": "0.1.1",
+<<<<<<< HEAD
+  "version": "0.1.6",
+=======
+  "version": "0.1.5",
+>>>>>>> 30aa2a9e0ee77cd5197bb799803b7eae1f574717
   "scripts": {
     "build:clean": "rimraf dist/css/*, dist/js/*",
     "prebuild": "npm run build:clean",
@@ -16,6 +20,7 @@
     "browser-sync": "^2.18.8",
     "browserify": "^14.1.0",
     "eslint": "^3.18.0",
+    "eslint-config-vi": "^6.0.0",
     "node-sass": "^4.5.2",
     "parallelshell": "^2.0.0",
     "rimraf": "^2.6.1",

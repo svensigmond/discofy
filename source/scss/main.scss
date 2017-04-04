@@ -6,3 +6,78 @@ $ezpz-cell-align:				true;
 $ezpz-grid-wrap:				true;
 
 @import './node_modules/ezpz-grid/lib/ezpz-flexbox-grid';
+
+<<<<<<< HEAD
+html {
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+	&,
+	&:before,
+	&:after, {
+		box-sizing: border-box;
+	}
+}
+
+* {
+	box-sizing: inherit;
+}
+
+.search {
+	width: 100%;
+	padding: 1rem;
+
+	font-size: 2rem;
+}
+
+.album {
+	display: flex;
+
+	// height: 100%;
+
+	margin: 0.5rem 0;
+	padding: 1rem;
+
+	background: #f8f8f8;
+	border: 1px solid #ddd;
+
+	cursor: pointer;
+
+	&:hover {
+		background: #ddd;
+	}
+
+	&__visual {
+		margin: 1rem;
+	}
+}
+
+.avatar {
+	text-align: center;
+
+	&__visual {
+		max-width: 10rem;
+
+		border-radius: 100%;
+	}
+=======
+th {
+	text-align: left;
+	vertical-align: top;
+}
+
+.album-list {
+	&__item {
+		&:hover {
+			background-color: hotpink;
+			cursor: pointer;
+		}
+	}
+}
+
+.list-unstyled {
+	margin: 0;
+	padding: 0;
+
+	list-style: none;
+>>>>>>> 30aa2a9e0ee77cd5197bb799803b7eae1f574717
+}
