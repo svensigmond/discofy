@@ -164,15 +164,24 @@ const discofy = new Moon({
 						return album;
 					});
 
+					const pagination = {
+						urls: response.pagination.urls,
+						items: response.pagination.items,
+						range: {
+							low: (response.pagination.per_page * response.pagination.page) - response.pagination.per_page + 1,
+							high: response.pagination.per_page * response.pagination.page,
+						},
+					};
+
 					this.set('collection', albums);
-					this.set('pagination', response.pagination.urls);
+					this.set('pagination', pagination);
 				});
 		},
 
 		paginate(action) {
 			const pagination = this.get('pagination');
 
-			this.callMethod('setCollectionData', [pagination[action]]);
+			this.callMethod('setCollectionData', [pagination.urls[action]]);
 		},
 
 		sort(action) {
