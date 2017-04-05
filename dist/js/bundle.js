@@ -11,8 +11,8 @@ class Discogs {
 		return fetch(url).then(response => response.json());
 	}
 
-	getCollectionData(id, url) {
-		url = url || `${this.baseUrl}/users/${id}/collection/folders/0/releases?page=1&token=${this.token}`;
+	getCollectionData(id, url, sorting) {
+		url = url || `${this.baseUrl}/users/${id}/collection/folders/0/releases?page=1&sort=${sorting.sort}&sort_order=${sorting.order}&token=${this.token}`;
 
 		return fetch(url).then(response => response.json());
 	}
@@ -109,6 +109,10 @@ const discofy = new Moon({
 		},
 		collection: [],
 		pagination: {},
+		sorting: {
+			sort: 'added',
+			order: 'desc',
+		},
 		details: {
 			show: false,
 		},
@@ -144,7 +148,7 @@ const discofy = new Moon({
 		},
 
 		setCollectionData(url) {
-			discogs.getCollectionData(this.get('id'), url)
+			discogs.getCollectionData(this.get('id'), url, this.get('sorting'))
 				.then((response) => {
 					const { releases } = response;
 					const albums = releases.map((release) => {
@@ -169,6 +173,24 @@ const discofy = new Moon({
 			const pagination = this.get('pagination');
 
 			this.callMethod('setCollectionData', [pagination[action]]);
+		},
+
+		sort(action) {
+			const sorting = this.get('sorting');
+
+			if (sorting.sort === action) {
+				if (sorting.order === 'desc') {
+					sorting.order = 'asc';
+				} else {
+					sorting.order = 'desc';
+				}
+			}
+
+			sorting.sort = action;
+
+			this.set('sorting', sorting);
+
+			this.callMethod('setCollectionData');
 		},
 	},
 });

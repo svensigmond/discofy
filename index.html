@@ -16,11 +16,25 @@
 
             <component-user m-if="{{user.show}}" m-literal:user="{{user}}"></component-user>
 
-            <button m-if="{{pagination.prev}}" m-on:click="paginate('prev')" class="js-prev">Previous</button>
-            <button m-if="{{pagination.next}}" m-on:click="paginate('next')" class="js-next">Next</button>
-
             <div class="grid grid--wrap">
                 <div class="cell cell--medium-2/3">
+                    <div class="grid" m-if={{collection.length}}>
+                        <div class="cell cell--1/3">
+                            <button m-if="{{pagination.prev}}" m-on:click="paginate('prev')" class="js-prev">Previous</button>
+                        </div>
+                        <div class="cell cell--1/3">
+                            <div class="text-center">
+                                <button type="button" m-on:click="sort('added')">Added</button>
+                                <button type="button" m-on:click="sort('artist')">Artist</button>
+                            </div>
+                        </div>
+                        <div class="cell cell--1/3">
+                            <div class="text-right">
+                               <button m-if="{{pagination.next}}" m-on:click="paginate('next')" class="js-next">Next</button>
+                            </div>
+                        </div>
+                    </div>
+
                     <div m-if="{{collection.length}}" class="grid grid--wrap grid--content-stretch">
                         <div m-for="album in {{collection}}" class="cell cell--small-1/2">
                             <component-album m-literal:album="{{album}}"></component-album>
