@@ -1,6 +1,6 @@
 {
   "name": "discofy",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "scripts": {
     "build:clean": "rimraf dist/css/*, dist/js/*",
     "prebuild": "npm run build:clean",
