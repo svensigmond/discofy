@@ -61,6 +61,14 @@ const ALBUM_DETAILS_TEMPLATE = `<div class="album-details">
 													</ul>
 												</td>
 											</tr>
+											<tr>
+												<th>Format:</th>
+												<td>
+													<ul class="list-unstyled" m-for="format in {{details.meta.formats}}">
+														<li>{{format}}</li>
+													</ul>
+												</td>
+											</tr>
  											<tr>
  												<th>Released:</th>
  												<td>{{details.year}}</td>
@@ -79,6 +87,12 @@ const ALBUM_DETAILS_TEMPLATE = `<div class="album-details">
 													<ol m-if="{{details.meta.trackList}}">
 														<li m-for="track in {{details.meta.trackList}}">{{track}}</li>
 													</ol>
+												</td>
+											</tr>
+											<tr>
+												<th>External:</th>
+												<td>
+													<a href="{{details.meta.discogsUrl}}">View on discogs</a>
 												</td>
 											</tr>
 										</tbody>
@@ -177,6 +191,12 @@ Moon.component('component-album', {
 					styles: response.styles ? response.styles.join(', ') : null,
 					art: response.images[0].uri,
 					trackList: response.tracklist.map((track) => track.title),
+					discogsUrl: response.uri,
+					formats: response.formats.map((format) => {
+						const descriptions = format.descriptions.join(', ');
+
+						return `${format.qty}x ${descriptions}`;
+					}),
 				};
 
 				this.set('album', album);
