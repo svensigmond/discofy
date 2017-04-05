@@ -23,8 +23,8 @@
 
             <component-user m-if="{{user.show}}" m-literal:user="{{user}}"></component-user>
 
-            <button m-if="{{collection.length}}" m-on:click="paginate('prev')" class="js-prev">Previous</button>
-            <button m-if="{{collection.length}}" m-on:click="paginate('next')" class="js-next">Next</button>
+            <button m-if="{{pagination.prev}}" m-on:click="paginate('prev')" class="js-prev">Previous</button>
+            <button m-if="{{pagination.next}}" m-on:click="paginate('next')" class="js-next">Next</button>
 
             <div class="grid grid--wrap">
                 <div class="cell cell--medium-2/3">

@@ -76,9 +76,9 @@ const ALBUM_DETAILS_TEMPLATE = `<div class="album-details">
 											<tr>
 												<th>Track list:</th>
 												<td>
-													<ul class="list-unstyled" m-if="{{details.meta.trackList}}">
+													<ol m-if="{{details.meta.trackList}}">
 														<li m-for="track in {{details.meta.trackList}}">{{track}}</li>
-													</ul>
+													</ol>
 												</td>
 											</tr>
 										</tbody>
@@ -104,7 +104,6 @@ const discofy = new Moon({
 			this.on('update:details', (data) => {
 				this.set('details', data.album);
 				this.set('details.show', true);
-				console.log(this.get('details'));
 			});
 		},
 	},
@@ -177,7 +176,7 @@ Moon.component('component-album', {
 					genres: response.genres.join(', '),
 					styles: response.styles ? response.styles.join(', ') : null,
 					art: response.images[0].uri,
-					trackList: response.tracklist.map((track) => `${track.title}`),
+					trackList: response.tracklist.map((track) => track.title),
 				};
 
 				this.set('album', album);
