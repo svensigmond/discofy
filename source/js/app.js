@@ -186,8 +186,6 @@ Moon.component('component-album', {
 
 			discogs.getAlbumData(album.id)
 			.then((response) => {
-				// console.log(response);
-
 				album.meta = {
 					genres: response.genres.join(', '),
 					styles: response.styles ? response.styles.join(', ') : null,
@@ -204,8 +202,6 @@ Moon.component('component-album', {
 				this.set('album', album);
 			})
 			.then(() => {
-				console.log(this.get('album'));
-
 				discofy.emit('update:details', this.$data);
 			});
 		},
