@@ -188,8 +188,8 @@ const discofy = new Moon({
 						urls: response.pagination.urls,
 						items: response.pagination.items,
 						range: {
-							low: (response.pagination.per_page * response.pagination.page) - response.pagination.per_page + 1,
-							high: response.pagination.per_page * response.pagination.page,
+							low: (albums.length * response.pagination.page) - albums.length + 1,
+							high: albums.length * response.pagination.page,
 						},
 					};
 
