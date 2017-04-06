@@ -28,10 +28,12 @@
                         </div>
                         <div class="cell cell--1/3">
                             <div class="text-center">
-                                <button type="button" m-on:click="sort('added')">Added</button>
-                                <button type="button" m-on:click="sort('artist')">Artist</button>
-                                <button type="button" m-on:click="sort('title')">Title</button>
-                                <button type="button" m-on:click="sort('year')">Year</button>
+                                <button type="button" m-for="option,index in {{sorting.options}}" m-on:click="sort({{option}}, {{index}})" m-literal:class="{{sorting.active}} === {{index}} ? 'text-bold' : ''">
+                                    {{option.sort}}
+
+                                    <span m-if="option.order === 'asc'">▴</span>
+                                    <span m-if="option.order === 'desc'">▾</span>
+                                </button>
                             </div>
                         </div>
                         <div class="cell cell--1/3">

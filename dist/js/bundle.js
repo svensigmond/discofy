@@ -110,8 +110,25 @@ const discofy = new Moon({
 		collection: [],
 		pagination: {},
 		sorting: {
-			sort: 'added',
-			order: 'desc',
+			active: 0,
+			options: [
+				{
+					sort: 'added',
+					order: 'desc',
+				},
+				{
+					sort: 'artist',
+					order: 'asc',
+				},
+				{
+					sort: 'title',
+					order: 'asc',
+				},
+				{
+					sort: 'year',
+					order: 'asc',
+				},
+			],
 		},
 		details: {
 			show: false,
@@ -148,7 +165,10 @@ const discofy = new Moon({
 		},
 
 		setCollectionData(url) {
-			discogs.getCollectionData(this.get('id'), url, this.get('sorting'))
+			const sorting = this.get('sorting');
+			const activeSorting = sorting.options[sorting.active];
+
+			discogs.getCollectionData(this.get('id'), url, activeSorting)
 				.then((response) => {
 					const { releases } = response;
 					const albums = releases.map((release) => {
@@ -184,18 +204,19 @@ const discofy = new Moon({
 			this.callMethod('setCollectionData', [pagination.urls[action]]);
 		},
 
-		sort(action) {
+		sort(option, index) {
 			const sorting = this.get('sorting');
 
-			if (sorting.sort === action) {
-				if (sorting.order === 'desc') {
-					sorting.order = 'asc';
+			if (sorting.options[sorting.active].sort === option.sort) {
+				if (option.order === 'desc') {
+					option.order = 'asc';
 				} else {
-					sorting.order = 'desc';
+					option.order = 'desc';
 				}
 			}
 
-			sorting.sort = action;
+			sorting.active = index;
+			sorting.options[index] = option;
 
 			this.set('sorting', sorting);
 
