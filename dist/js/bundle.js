@@ -136,10 +136,22 @@ const discofy = new Moon({
 	},
 
 	hooks: {
+		init() {
+			const localData = JSON.parse(localStorage.getItem('discofy'));
+
+			if (localData) {
+				this.$data = localData;
+
+				// TODO: Figure out why we need to set collection to trigger the changes
+				this.set('collection', localData.collection);
+			}
+		},
 		mounted() {
 			this.on('update:details', (data) => {
 				this.set('details', data.album);
 				this.set('details.show', true);
+
+				this.callMethod('updateLocalStorage');
 			});
 		},
 	},
@@ -161,6 +173,8 @@ const discofy = new Moon({
 					ownedAmount: response.num_collection,
 					location: response.location,
 				});
+
+				this.callMethod('updateLocalStorage');
 			});
 		},
 
@@ -195,6 +209,8 @@ const discofy = new Moon({
 
 					this.set('collection', albums);
 					this.set('pagination', pagination);
+
+					this.callMethod('updateLocalStorage');
 				});
 		},
 
@@ -221,6 +237,10 @@ const discofy = new Moon({
 			this.set('sorting', sorting);
 
 			this.callMethod('setCollectionData');
+		},
+
+		updateLocalStorage() {
+			localStorage.setItem('discofy', JSON.stringify(this.$data));
 		},
 	},
 });
