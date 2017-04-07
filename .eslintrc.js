@@ -2,7 +2,8 @@ module.exports = {
 	extends: 'vi',
 	root: true,
 	env: {
-		jasmine: true
+		jasmine: true,
+		node: true
 	},
 
 	rules: {
