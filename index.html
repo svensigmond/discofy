@@ -18,13 +18,35 @@
 
             <component-mediaplayer m-if="{{collection.length}}" src="{{mediaUrl}}"></component-mediaplayer>
 
-            <button m-if="{{pagination.prev}}" m-on:click="paginate('prev')" class="js-prev">Previous</button>
-            <button m-if="{{pagination.next}}" m-on:click="paginate('next')" class="js-next">Next</button>
+            <div class="grid grid--wrap" m-if={{collection.length}}>
+                <div class="cell cell--1">
+                    <strong>Showing: {{pagination.range.low}}-{{pagination.range.high}} of {{pagination.items}} releases</strong>
+                </div>
 
-            <div m-if="{{collection.length}}" class="grid grid--wrap">
                 <div class="cell cell--medium-2/3">
-                    <div class="grid grid--wrap grid--content-stretch">
-                        <div m-for="album in {{collection}}" class="cell cell--small-1/2">
+                    <div class="grid">
+                        <div class="cell cell--1/3">
+                            <button m-if="{{pagination.urls.prev}}" m-on:click="paginate('prev')" class="js-prev">Previous</button>
+                        </div>
+                        <div class="cell cell--1/3">
+                            <div class="text-center">
+                                <button type="button" m-for="option,index in {{sorting.options}}" m-on:click="sort({{option}}, {{index}})" m-literal:class="{{sorting.active}} === {{index}} ? 'text-bold' : ''">
+                                    {{option.sort}}
+
+                                    <span m-if="option.order === 'asc'">▴</span>
+                                    <span m-if="option.order === 'desc'">▾</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="cell cell--1/3">
+                            <div class="text-right">
+                               <button m-if="{{pagination.urls.next}}" m-on:click="paginate('next')" class="js-next">Next</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                        <div m-for="album in {{collection}}" class="cell cell--small-1/3">
                             <component-album m-literal:album="{{album}}"></component-album>
                         </div>
                     </div>
