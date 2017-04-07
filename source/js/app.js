@@ -1,6 +1,7 @@
 const ALBUM_TEMPLATE = require('./templates/album');
 const USER_TEMPLATE = require('./templates/user');
 const ALBUM_DETAILS_TEMPLATE = require('./templates/details');
+const MEDIAPLAYER_TEMPLATE = require('./templates/mediaplayer');
 
 class Spotify {
 	constructor() {
@@ -43,12 +44,6 @@ const discogs = new Discogs();
 const spotify = new Spotify();
 
 const { Moon } = window;
-
-const MEDIAPLAYER_TEMPLATE = `<div class="mediaplayer">
-									<audio src="{{src}}">
-										Your browser does not support the <code>audio</code> element.
-									</audio>
-								</div>`;
 
 const discofy = new Moon({
 	el: '#js-discofy',

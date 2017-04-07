@@ -40,7 +40,7 @@ module.exports = `<div class="album-details">
                 <th>Track list:</th>
                 <td>
                     <ul class="list-unstyled" m-if="{{details.meta.trackList}}">
-                        <li m-for="track in {{details.meta.trackList}}">{{track}}</li>
+                        <li m-for="track in {{details.meta.trackList}}">{{track}} <button m-on:click="clickTrack({{track}})">🎵</button></li>
                     </ul>
                 </td>
             </tr>

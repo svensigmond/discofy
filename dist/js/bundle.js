@@ -2,6 +2,7 @@
 const ALBUM_TEMPLATE = require('./templates/album');
 const USER_TEMPLATE = require('./templates/user');
 const ALBUM_DETAILS_TEMPLATE = require('./templates/details');
+const MEDIAPLAYER_TEMPLATE = require('./templates/mediaplayer');
 
 class Spotify {
 	constructor() {
@@ -44,12 +45,6 @@ const discogs = new Discogs();
 const spotify = new Spotify();
 
 const { Moon } = window;
-
-const MEDIAPLAYER_TEMPLATE = `<div class="mediaplayer">
-									<audio src="{{src}}">
-										Your browser does not support the <code>audio</code> element.
-									</audio>
-								</div>`;
 
 const discofy = new Moon({
 	el: '#js-discofy',
@@ -298,7 +293,7 @@ Moon.component('component-album-details', {
 
 window.discofy = discofy;
 
-},{"./templates/album":2,"./templates/details":3,"./templates/user":4}],2:[function(require,module,exports){
+},{"./templates/album":2,"./templates/details":3,"./templates/mediaplayer":4,"./templates/user":5}],2:[function(require,module,exports){
 module.exports = `<div class="album" m-on:click="setAlbumData()">
     <div class="album__visual">
         <img src="{{album.thumb}}" alt="Album">
@@ -354,7 +349,7 @@ module.exports = `<div class="album-details">
                 <th>Track list:</th>
                 <td>
                     <ul class="list-unstyled" m-if="{{details.meta.trackList}}">
-                        <li m-for="track in {{details.meta.trackList}}">{{track}}</li>
+                        <li m-for="track in {{details.meta.trackList}}">{{track}} <button m-on:click="clickTrack({{track}})">🎵</button></li>
                     </ul>
                 </td>
             </tr>
@@ -369,6 +364,13 @@ module.exports = `<div class="album-details">
 </div>`;
 
 },{}],4:[function(require,module,exports){
+module.exports = `<div class="mediaplayer">
+	<audio src="{{src}}">
+		Your browser does not support the <code>audio</code> element.
+	</audio>
+</div>`;
+
+},{}],5:[function(require,module,exports){
 module.exports = `<figure class="avatar">
     <img src="{{user.avatar}}" alt="{{user.name}}" class="avatar__visual">
     <figcaption class="avatar_caption">{{user.name}}, {{user.location}} ({{user.username}})</figcaption>
