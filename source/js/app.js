@@ -193,10 +193,20 @@ Moon.component('component-album', {
 					genres: response.genres.join(', '),
 					styles: response.styles ? response.styles.join(', ') : null,
 					art: response.images[0].uri,
-					trackList: response.tracklist.map((track) => track.title),
+					trackList: response.tracklist.map((track) => {
+						let formattedTrack = '';
+
+						if (track.position) {
+							formattedTrack = `${track.position} - ${track.title}`;
+						} else {
+							formattedTrack = `${track.title}`;
+						}
+
+						return formattedTrack;
+					}),
 					discogsUrl: response.uri,
 					formats: response.formats.map((format) => {
-						const descriptions = format.descriptions.join(', ');
+						const descriptions = format.descriptions ? format.descriptions.join(', ') : 'Unknown';
 
 						return `${format.qty}x ${descriptions}`;
 					}),

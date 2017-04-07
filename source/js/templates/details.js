@@ -39,9 +39,9 @@ module.exports = `<div class="album-details">
             <tr>
                 <th>Track list:</th>
                 <td>
-                    <ol m-if="{{details.meta.trackList}}">
+                    <ul class="list-unstyled" m-if="{{details.meta.trackList}}">
                         <li m-for="track in {{details.meta.trackList}}">{{track}}</li>
-                    </ol>
+                    </ul>
                 </td>
             </tr>
             <tr>

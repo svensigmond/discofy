@@ -194,10 +194,20 @@ Moon.component('component-album', {
 					genres: response.genres.join(', '),
 					styles: response.styles ? response.styles.join(', ') : null,
 					art: response.images[0].uri,
-					trackList: response.tracklist.map((track) => track.title),
+					trackList: response.tracklist.map((track) => {
+						let formattedTrack = '';
+
+						if (track.position) {
+							formattedTrack = `${track.position} - ${track.title}`;
+						} else {
+							formattedTrack = `${track.title}`;
+						}
+
+						return formattedTrack;
+					}),
 					discogsUrl: response.uri,
 					formats: response.formats.map((format) => {
-						const descriptions = format.descriptions.join(', ');
+						const descriptions = format.descriptions ? format.descriptions.join(', ') : 'Unknown';
 
 						return `${format.qty}x ${descriptions}`;
 					}),
@@ -274,9 +284,9 @@ module.exports = `<div class="album-details">
             <tr>
                 <th>Track list:</th>
                 <td>
-                    <ol m-if="{{details.meta.trackList}}">
+                    <ul class="list-unstyled" m-if="{{details.meta.trackList}}">
                         <li m-for="track in {{details.meta.trackList}}">{{track}}</li>
-                    </ol>
+                    </ul>
                 </td>
             </tr>
             <tr>
