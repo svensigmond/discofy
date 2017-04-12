@@ -16,7 +16,7 @@
 
             <component-user m-if="{{user.show}}" m-literal:user="{{user}}"></component-user>
 
-            <component-mediaplayer m-if="{{collection.length}}" src="{{mediaUrl}}"></component-mediaplayer>
+            <component-media-player m-if="{{collection.length}}" src="{{mediaUrl}}"></component-media-player>
 
             <div class="grid grid--wrap" m-if={{collection.length}}>
                 <div class="cell cell--1">
@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        <script src="//unpkg.com/moonjs@0.7.1"></script>
+        <!--<script src="//unpkg.com/moonjs@0.7.1"></script>-->
         <script src="dist/js/bundle.js"></script>
     </body>
 </html>

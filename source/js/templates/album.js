@@ -1,4 +1,4 @@
-module.exports = `<div class="album" m-on:click="setAlbumData()">
+const template = `<div class="album" m-on:click="setAlbumData()">
     <div class="album__visual">
         <img src="{{album.thumb}}" alt="Album">
     </div>
@@ -9,3 +9,5 @@ module.exports = `<div class="album" m-on:click="setAlbumData()">
         </ul>
     </div>
 </div>`;
+
+export default template;

@@ -1,4 +1,4 @@
-module.exports = `<div class="album-details">
+const template = `<div class="album-details">
     <img src="{{details.meta.art}}">
     <table>
         <tbody>
@@ -53,3 +53,5 @@ module.exports = `<div class="album-details">
         </tbody>
     </table>
 </div>`;
+
+export default template;
