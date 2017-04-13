@@ -1,4 +1,5 @@
 import Moon from 'moonjs';
+import eventbus from '../utils/eventbus';
 import discogs from '../api/discogs';
 import template from '../templates/album';
 
@@ -38,7 +39,7 @@ const album2 = Moon.component('component-album', {
 					this.set('album', album);
 				})
 				.then(() => {
-					window.discofy.emit('update:details', this.$data); // refactor :')
+					eventbus.emit('update:details', this.$data);
 				});
 		},
 	},

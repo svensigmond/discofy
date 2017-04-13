@@ -1,4 +1,6 @@
 import Moon from 'moonjs';
+import Utils from './utils/utils';
+import eventbus from './utils/eventbus';
 import discogs from './api/discogs';
 
 import './components/album-details';
@@ -54,15 +56,13 @@ const discofy = new Moon({
 			}
 		},
 		mounted() {
-			this.on('mediaplayer:play', (url) => {
+			eventbus.on('mediaplayer:play', (url) => {
 				this.set('mediaUrl', url);
 			});
 
-			this.on('update:details', (data) => {
+			eventbus.on('update:details', (data) => {
 				this.set('details', data.album);
 				this.set('details.show', true);
-
-				// this.callMethod('updateLocalStorage');
 			});
 		},
 	},
@@ -100,9 +100,9 @@ const discofy = new Moon({
 						const info = release.basic_information;
 						const album = {
 							id: info.id,
-							artists: info.artists.map((artist) => artist.name),
+							artists: info.artists.map(artist => Utils.stripNumber(artist.name)),
 							title: info.title,
-							year: info.year > 0 ? info.year : 'Unknown',
+							year: info.year > 0 ? info.year : null,
 							thumb: info.thumb,
 						};
 

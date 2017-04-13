@@ -101,6 +101,14 @@ var _moonjs = require('moonjs');
 
 var _moonjs2 = _interopRequireDefault(_moonjs);
 
+var _utils = require('./utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _eventbus = require('./utils/eventbus');
+
+var _eventbus2 = _interopRequireDefault(_eventbus);
+
 var _discogs = require('./api/discogs');
 
 var _discogs2 = _interopRequireDefault(_discogs);
@@ -160,15 +168,13 @@ var discofy = new _moonjs2.default({
 		mounted: function mounted() {
 			var _this = this;
 
-			this.on('mediaplayer:play', function (url) {
+			_eventbus2.default.on('mediaplayer:play', function (url) {
 				_this.set('mediaUrl', url);
 			});
 
-			this.on('update:details', function (data) {
+			_eventbus2.default.on('update:details', function (data) {
 				_this.set('details', data.album);
 				_this.set('details.show', true);
-
-				// this.callMethod('updateLocalStorage');
 			});
 		}
 	},
@@ -208,10 +214,10 @@ var discofy = new _moonjs2.default({
 					var album = {
 						id: info.id,
 						artists: info.artists.map(function (artist) {
-							return artist.name;
+							return _utils2.default.stripNumber(artist.name);
 						}),
 						title: info.title,
-						year: info.year > 0 ? info.year : 'Unknown',
+						year: info.year > 0 ? info.year : null,
 						thumb: info.thumb
 					};
 
@@ -266,7 +272,7 @@ var discofy = new _moonjs2.default({
 
 window.discofy = discofy;
 
-},{"./api/discogs":2,"./components/album":6,"./components/album-details":5,"./components/media-player":7,"./components/user":8,"moonjs":1}],5:[function(require,module,exports){
+},{"./api/discogs":2,"./components/album":6,"./components/album-details":5,"./components/media-player":7,"./components/user":8,"./utils/eventbus":13,"./utils/utils":14,"moonjs":1}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -276,6 +282,10 @@ Object.defineProperty(exports, "__esModule", {
 var _moonjs = require('moonjs');
 
 var _moonjs2 = _interopRequireDefault(_moonjs);
+
+var _eventbus = require('../utils/eventbus');
+
+var _eventbus2 = _interopRequireDefault(_eventbus);
 
 var _spotify = require('../api/spotify');
 
@@ -306,7 +316,7 @@ var albumDetails = _moonjs2.default.component('component-album-details', {
 					return;
 				}
 
-				window.discofy.emit('mediaplayer:play', [previewUrl]); // refactor :')
+				_eventbus2.default.emit('mediaplayer:play', [previewUrl]);
 			});
 		}
 	}
@@ -314,7 +324,7 @@ var albumDetails = _moonjs2.default.component('component-album-details', {
 
 exports.default = albumDetails;
 
-},{"../api/spotify":3,"../templates/album-details":9,"moonjs":1}],6:[function(require,module,exports){
+},{"../api/spotify":3,"../templates/album-details":9,"../utils/eventbus":13,"moonjs":1}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -324,6 +334,10 @@ Object.defineProperty(exports, "__esModule", {
 var _moonjs = require('moonjs');
 
 var _moonjs2 = _interopRequireDefault(_moonjs);
+
+var _eventbus = require('../utils/eventbus');
+
+var _eventbus2 = _interopRequireDefault(_eventbus);
 
 var _discogs = require('../api/discogs');
 
@@ -373,7 +387,7 @@ var album2 = _moonjs2.default.component('component-album', {
 
 				_this.set('album', album);
 			}).then(function () {
-				window.discofy.emit('update:details', _this.$data); // refactor :')
+				_eventbus2.default.emit('update:details', _this.$data);
 			});
 		}
 	}
@@ -381,7 +395,7 @@ var album2 = _moonjs2.default.component('component-album', {
 
 exports.default = album2;
 
-},{"../api/discogs":2,"../templates/album":10,"moonjs":1}],7:[function(require,module,exports){
+},{"../api/discogs":2,"../templates/album":10,"../utils/eventbus":13,"moonjs":1}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -484,5 +498,53 @@ Object.defineProperty(exports, "__esModule", {
 var template = "<figure class=\"avatar\">\n    <img src=\"{{user.avatar}}\" alt=\"{{user.name}}\" class=\"avatar__visual\">\n    <figcaption class=\"avatar_caption\">{{user.name}}, {{user.location}} ({{user.username}})</figcaption>\n</figure>";
 
 exports.default = template;
+
+},{}],13:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _moonjs = require('moonjs');
+
+var _moonjs2 = _interopRequireDefault(_moonjs);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var eventbus = new _moonjs2.default();
+
+exports.default = eventbus;
+
+},{"moonjs":1}],14:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Utils = function () {
+	function Utils() {
+		_classCallCheck(this, Utils);
+	}
+
+	_createClass(Utils, null, [{
+		key: 'stripNumber',
+
+		// Strip number between parentheses at the end of of string
+		// 'Temples (4)' will return 'Temples'
+		value: function stripNumber(value) {
+			return value.replace(/ \([\d]+\)$/, '');
+		}
+	}]);
+
+	return Utils;
+}();
+
+exports.default = Utils;
 
 },{}]},{},[4]);

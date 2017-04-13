@@ -1,4 +1,5 @@
 import Moon from 'moonjs';
+import eventbus from '../utils/eventbus';
 import Spotify from '../api/spotify';
 import template from '../templates/album-details';
 
@@ -22,7 +23,7 @@ const albumDetails = Moon.component('component-album-details', {
 						return;
 					}
 
-					window.discofy.emit('mediaplayer:play', [previewUrl]); // refactor :')
+					eventbus.emit('mediaplayer:play', [previewUrl]);
 				});
 		},
 	},
