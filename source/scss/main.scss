@@ -1,102 +1,12 @@
 @charset 'utf-8';
 
-$ezpz-grid-type: 				'fractions';
-$ezpz-grid-align:				true;
-$ezpz-cell-align:				true;
-$ezpz-grid-wrap:				true;
+@import './base/base';
+@import './base/grid';
+@import './base/utils';
 
-@import './node_modules/ezpz-grid/lib/ezpz-flexbox-grid';
+@import './modules/album';
+@import './modules/avatar';
+@import './modules/album-details';
+@import './modules/mediaplayer';
+@import './modules/search';
 
-html {
-	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-
-	&,
-	&:before,
-	&:after, {
-		box-sizing: border-box;
-	}
-}
-
-* {
-	box-sizing: inherit;
-}
-
-img {
-	max-width: 100%;
-}
-
-th {
-	text-align: left;
-	vertical-align: top;
-}
-
-.search {
-	width: 100%;
-	padding: 1rem;
-
-	font-size: 2rem;
-}
-
-.album {
-	display: flex;
-
-	// height: 100%;
-
-	margin: 0.5rem 0;
-	padding: 1rem;
-
-	background: #f8f8f8;
-	border: 1px solid #ddd;
-
-	cursor: pointer;
-
-	&:hover {
-		background: #ddd;
-	}
-
-	&__visual {
-		margin: 1rem;
-	}
-}
-
-.album-details {
-	position: sticky;
-	top: 1rem;
-}
-
-.avatar {
-	text-align: center;
-
-	&__visual {
-		max-width: 10rem;
-
-		border-radius: 100%;
-	}
-}
-
-.list-unstyled {
-	margin: 0;
-	padding: 0;
-
-	list-style: none;
-}
-
-.text-center {
-	text-align: center;
-}
-
-.text-right {
-	text-align: right;
-}
-
-.text-bold {
-	font-weight: bold;
-}
-
-.mediaplayer {
-	position: fixed;
-	top: 0;
-	left: 50%;
-
-	transform: translateX(-50%);
-}

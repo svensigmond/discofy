@@ -1,0 +1,21 @@
+.album {
+	display: flex;
+
+	// height: 100%;
+
+	margin: 0.5rem 0;
+	padding: 1rem;
+
+	background: #f8f8f8;
+	border: 1px solid #ddd;
+
+	cursor: pointer;
+
+	&:hover {
+		background: #ddd;
+	}
+
+	&__visual {
+		margin: 1rem;
+	}
+}

@@ -1,0 +1,9 @@
+.avatar {
+	text-align: center;
+
+	&__visual {
+		max-width: 10rem;
+
+		border-radius: 100%;
+	}
+}

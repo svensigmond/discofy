@@ -1,3 +1,14 @@
+html {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; }
+  html, html:before, html:after {
+    box-sizing: border-box; }
+
+* {
+  box-sizing: inherit; }
+
+img {
+  max-width: 100%; }
+
 .grid {
   flex-direction: row;
   box-sizing: border-box;
@@ -378,48 +389,6 @@
     .grid > .cell--large-align-baseline {
       align-self: baseline; } }
 
-html {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; }
-  html, html:before, html:after {
-    box-sizing: border-box; }
-
-* {
-  box-sizing: inherit; }
-
-img {
-  max-width: 100%; }
-
-th {
-  text-align: left;
-  vertical-align: top; }
-
-.search {
-  width: 100%;
-  padding: 1rem;
-  font-size: 2rem; }
-
-.album {
-  display: flex;
-  margin: 0.5rem 0;
-  padding: 1rem;
-  background: #f8f8f8;
-  border: 1px solid #ddd;
-  cursor: pointer; }
-  .album:hover {
-    background: #ddd; }
-  .album__visual {
-    margin: 1rem; }
-
-.album-details {
-  position: sticky;
-  top: 1rem; }
-
-.avatar {
-  text-align: center; }
-  .avatar__visual {
-    max-width: 10rem;
-    border-radius: 100%; }
-
 .list-unstyled {
   margin: 0;
   padding: 0;
@@ -434,8 +403,35 @@ th {
 .text-bold {
   font-weight: bold; }
 
+.album {
+  display: flex;
+  margin: 0.5rem 0;
+  padding: 1rem;
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+  cursor: pointer; }
+  .album:hover {
+    background: #ddd; }
+  .album__visual {
+    margin: 1rem; }
+
+.avatar {
+  text-align: center; }
+  .avatar__visual {
+    max-width: 10rem;
+    border-radius: 100%; }
+
+.album-details {
+  position: sticky;
+  top: 1rem; }
+
 .mediaplayer {
   position: fixed;
   top: 0;
   left: 50%;
   transform: translateX(-50%); }
+
+.search {
+  width: 100%;
+  padding: 1rem;
+  font-size: 2rem; }
