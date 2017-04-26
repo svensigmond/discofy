@@ -27,7 +27,7 @@ const album2 = Moon.component('component-album', {
 
 						// 	return track.title;
 						// }),
-						trackList: response.tracklist.map((track) => track.title),
+						trackList: response.tracklist.map(track => track.title),
 						discogsUrl: response.uri,
 						formats: response.formats.map((format) => {
 							const descriptions = format.descriptions ? format.descriptions.join(', ') : null;

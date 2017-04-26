@@ -56,7 +56,7 @@ const discofy = new Moon({
 			}
 		},
 		mounted() {
-			eventbus.on('mediaplayer:play', (url) => {
+			eventbus.on('mediaplayer:change', (url) => {
 				this.set('mediaUrl', url);
 			});
 
@@ -64,6 +64,14 @@ const discofy = new Moon({
 				this.set('details', data.album);
 				this.set('details.show', true);
 			});
+		},
+
+		updated() {
+			const mediaUrl = this.get('mediaUrl');
+
+			if (mediaUrl) {
+				eventbus.emit('mediaplayer:play');
+			}
 		},
 	},
 

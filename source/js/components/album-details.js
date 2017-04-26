@@ -18,12 +18,10 @@ const albumDetails = Moon.component('component-album-details', {
 					const previewUrl = tracks.length && tracks[0].preview_url;
 
 					if (!previewUrl) {
-						alert('Yo no track found!1! :(');
-
 						return;
 					}
 
-					eventbus.emit('mediaplayer:play', [previewUrl]);
+					eventbus.emit('mediaplayer:change', [previewUrl]);
 				});
 		},
 	},

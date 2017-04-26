@@ -405,8 +405,8 @@ img {
 
 .album {
   display: flex;
-  margin: 0.5rem 0;
   padding: 1rem;
+  margin: 0.5rem 0;
   background: #f8f8f8;
   border: 1px solid #ddd;
   cursor: pointer; }
