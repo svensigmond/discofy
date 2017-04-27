@@ -1,0 +1,56 @@
+$basename: ".album";
+#{$basename} {
+    &__info {
+        position: relative;
+        margin: 0;
+        padding: $distance-l;
+        outline: $line-width-l $text-color solid;
+        font-size: $distance-xxl;
+        line-height: 1;
+    }
+
+    &__format {
+        margin: 0;
+        padding: 0;
+        font-family: "pragmatica", Arial, sans-serif;
+        font-size: .85em;
+        font-family: "pragmatica-condenced", Arial, sans-serif;
+        font-weight: 500;
+        line-height: 1;
+    }
+
+    &__release {
+        position: absolute;
+        z-index: 9;
+        bottom: #{-2 * $gutter};
+        margin: 0;
+        padding: 0;
+        text-align: left;
+        font-size: 13em;
+        font-family: "pragmatica", Arial, sans-serif;
+        font-weight: 700;
+        color: $background-color;
+
+        &:before {
+            content: "’";
+            //letter-spacing: -1.5em;
+        }
+    }
+
+    &__tracklist {
+        margin: 0;
+        columns: 2;
+        column-gap: 3 * $gutter;
+        padding-left: $gutter;
+        font-family: "pragmatica", Arial, sans-serif;
+        font-weight: 500;
+        
+        .duration {        
+            color:rgba($text-color, 0.5);
+
+            &:before {
+                content: " - "
+            }
+        }
+    }
+}

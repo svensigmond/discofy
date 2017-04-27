@@ -1,13 +1,12 @@
-const template = `<div class="album" m-on:click="setAlbumData()">
-    <div class="album__visual">
-        <img src="{{album.thumb}}" alt="Album">
-    </div>
-    <div class="album__body">
-        <h1>{{album.title}} <span m-if="{{album.year}}">({{album.year}})</span></h1>
-        <ul m-for="artist in {{album.artists}}">
-            <li>{{artist}}</li>
-        </ul>
-    </div>
-</div>`;
+const template = `<a href="detail.html"><img src="{{album.thumb}}" class="album__cover__img" alt="{{album.title}}"></a>
+					<h2 class="albums__item__title">
+						<span class="album-release">{{album.year}}</span>
+						<span class="album-artist">
+							<ul m-for="artist in {{album.artists}}">
+								<li>{{artist}}</li>
+							</ul>
+						</span><br>
+						<span class="album-title">{{album.title}}</span>
+					</h2>`;
 
 export default template;

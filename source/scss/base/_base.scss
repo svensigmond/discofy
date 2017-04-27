@@ -1,19 +1,66 @@
-html {
-	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-
-	&,
-	&:before,
-	&:after, {
-		box-sizing: border-box;
-	}
+// Templating
+body {
+	grid-template: repeat(8, 1fr) / repeat(8, 1fr);
+	grid-gap: $gutter;
 }
 
-* { // stylelint-disable-line selector-no-universal
-	box-sizing: inherit;
+// setup basic elements
+html {
+	font-family: "pragmatica", Arial, sans-serif;
+	background-color: $background-color;
+	margin: 0;
+	padding: 0;
+	background: $background-color;
+}
+
+body {
+	height: calc(100vh - 2 * #{$gutter});
+	margin: $gutter;
+	padding: 0;
+	color: $text-color;
+	overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: "pragmatica-extended", Arial, sans-serif;
+	font-weight: 700;
+	line-height: 1;
+	margin: 0;
+}
+
+h3 {
+	font-size: 1em;
 }
 
 img {
-	max-width: 100%;
+	width: 100%;
+	margin: 0;
+}
 
-	// display: block;
+b {
+	font-weight: 700;
+}
+
+a {
+	color: $text-color;
+	text-decoration: underline;
+}
+
+button {
+	background-color: $background-color;
+	color: $text-color;
+	border: none;
+	border-left: $line-width-l $text-color solid;
+	outline: none;
+	line-height: 1;
+	padding: $distance-s/2;
+	font-family: "pragmatica", Arial, sans-serif;
+	font-size: 1em;
+	cursor: pointer;
+	box-sizing: border-box;
+	margin: 0;
+
+	img, svg {
+		width: 16px;
+	}
 }

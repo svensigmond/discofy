@@ -1,0 +1,81 @@
+$basename: ".albums";
+
+#{$basename} {
+	&__account {
+		text-align: right;
+
+		h1 {
+			font-size: 2 * $distance-l;
+			line-height: 1.5;
+			margin: 0;
+			padding: 0;
+
+			&:after {
+				content: "’s collection"
+			}
+		}
+
+		span {
+			margin-left: $gutter;
+		}
+	}
+
+	&__navigation {
+		pointer-events: visible;
+		margin-top: $gutter;
+
+		ol {
+			display: flex;
+			flex-wrap: wrap;
+			padding: 0;
+			list-style: none;
+
+			li {
+				display: inline-flex;
+				margin: 0;
+				padding: 0;
+				margin-bottom: $gutter;
+				border-top: $line-width-l $text-color solid;
+
+				a {
+					padding: #{$gutter / 2};
+					text-decoration: none;
+					margin: 0;
+
+					&.active, &:hover {
+						background: $text-color;
+						color: $background-color;
+					}
+				}
+			}
+		}
+	}
+
+	&__controls {
+		position: relative;
+		pointer-events: visible;
+		
+		.sort-btn {
+			display: block;
+			width: 100%;
+			text-align: left;
+			line-height: 2;
+			margin: 0;
+
+			&:hover {
+				background: $text-color;
+				color: $background-color;
+			}
+		}
+
+		.active {
+			background: $text-color;
+			color: $background-color;
+		}
+
+		h3 {
+			padding: #{$gutter/2} 0;
+			line-height: 2;
+		}
+	}
+}

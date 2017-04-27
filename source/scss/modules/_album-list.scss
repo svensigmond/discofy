@@ -1,0 +1,129 @@
+$basename: ".albums";
+
+#{$basename} {
+	position: relative;
+	align-items: start;
+	margin: 0;
+	padding: 0;
+
+	li {
+		//all list items have this styling	
+		float:left;
+		list-style: none;
+		width: calc(25% - #{$gutter});
+		margin: 0 $gutter $gutter 0;
+	}
+
+	&__list {
+		margin-right: #{-1 * $gutter};
+		padding-left: 0;
+	}
+
+	&__category {
+		float: left;
+		font-family: "pragmatica-extended", Arial, sans-serif;
+		font-weight: 700;
+		color: rgba($text-color, .25);
+		box-sizing: border-box;
+		text-align: center;
+		padding: $gutter;
+
+		svg {
+			width: 200%;
+			margin-left: -100%;
+		}
+	}
+
+	&__item {
+		position: relative;
+		float: left;
+		box-sizing: border-box;
+
+		svg {
+			align-self: center;
+			width: calc(50% - #{$gutter});
+		}
+
+		&__cover {
+			
+		}
+		
+		img {
+			height: calc(12.3vw - #{$gutter});
+			width: calc(12.3vw - #{$gutter});
+			box-shadow: 0 0 $gutter rgba($text-color, .25);
+			transition: all 0.25s;
+		}
+
+		&__title {
+			margin-top: #{$gutter / 2};
+			font-size: .85em;;
+			font-family: "pragmatica-condenced", Arial, sans-serif;
+			line-height: 1.25;
+
+			.album-release{ 
+				position: absolute;
+				bottom: 19%;
+				left: 1%;
+				color: $background-color;
+				font-size: 2.5em;
+				font-family: "pragmatica-extended", Arial, sans-serif;
+				font-weight: 700;
+				letter-spacing: -6px;
+				z-index: 15;
+
+				&:before {
+					content: "’";
+				}
+			}
+			
+			.album-artist {
+				font-weight: 500;
+			}
+
+			.album-title{
+				&:before {
+					content: " - ";
+				}
+			}
+		}
+
+		&:after {
+			transition: all 0.25s;
+			position: absolute;
+			top: #{$gutter / 2};
+			left: #{$gutter / 2};
+			right: #{$gutter / 2};
+			padding-bottom: 100%;
+			content: " ";
+			background: #111;
+			border-radius: 50%;
+			margin: #{-0.5 * $gutter};
+			z-index: -1;
+		}
+
+		&:hover {
+			&:after {
+				z-index: -1;
+				transition: all 0.25s;
+				transition-delay: 0.15s;
+				top: #{$gutter / 2};
+				left: #{3 * $gutter / 2};
+				right: #{-2 * $gutter / 2};
+				padding-bottom: 100%;
+				box-shadow: 0 #{$gutter / 2} $gutter rgba($text-color, .35);
+			}
+
+			img {
+				box-shadow: 0 #{$gutter / 2} $gutter rgba($text-color, .5);
+				transform: scale(1.075 , 1.075);
+			}
+		}
+
+		&:nth-child(2n) {
+			margin-top: 16.7%;
+		}
+	}
+}
+
+

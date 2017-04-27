@@ -48,8 +48,10 @@ const discofy = new Moon({
 		init() {
 			const localData = JSON.parse(localStorage.getItem('discofy'));
 
+			console.log(this.$data);
+
 			if (localData) {
-				this.$data = localData;
+				// this.$data = localData;
 
 				// TODO: Figure out why we need to set collection to trigger the changes
 				this.set('collection', localData.collection);

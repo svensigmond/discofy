@@ -1,0 +1,106 @@
+@import 'variables';
+
+.home {
+	.logo {
+		grid-area: 5 / 3 / 6 / 5;
+		width: 550px;
+		align-self: start;
+	}
+	.search {
+		grid-area: 4 / 3 / 5 / 7;
+		align-self: end;
+	}
+}
+
+.albums {
+	&__interface {
+		display: inline-grid;
+		position: fixed;
+		grid-area: 1 / 1 / 9 / 9;
+		grid-template: repeat(8, 1fr) / repeat(8, 1fr);
+		grid-gap: $gutter;
+		z-index: 99;
+		pointer-events: none;
+		margin: 0;
+		width: calc(100% - #{2 * $gutter});
+		height: calc(100vh - #{2 * $gutter});
+	}
+
+	&__logo {
+		pointer-events: visible;
+		display: block;
+		grid-area: 1 / 6 / 2 / 8;
+	}
+
+	&__list {
+		grid-area: 2 / 2 / 9 / 6;
+		align-self: start;
+	}
+
+	&__account {
+		grid-area: 2 / 4 / 6 / 8;
+		align-self: start;
+	}
+
+	&__controls {
+		grid-area: 4 / 7 / 6 / 8;
+		align-self: end;
+	}
+
+	.search {
+		grid-area: 1 / 2 / 2 / 5;
+		align-self: start;
+	}
+
+	&__navigation {
+		grid-area: 6 / 7 / 9 / 8;
+		align-self: start;
+	}
+}
+
+.album {
+	.logo {
+		grid-area: 2 / 5 / 3 / 9;
+		align-self: start;
+		width:  218px;
+	}
+
+	&__cover {
+		grid-area: 1 / 2 / 8 / 5;
+		align-self: end;
+	}
+
+	&__info {
+		grid-area: 4 / 3 / 6 / 8;
+		align-self: start;
+	}
+
+	&__format {
+		grid-area: 3 / 5 / 4 / 9;
+		align-self: end;
+	}
+
+	&__tracklist {
+		grid-area: 6 / 5 / 8 / 8;
+		align-self: end;
+	}
+
+	&__release {
+		grid-area: 2 / 2 / 8 / 5;
+		align-self: end;
+	}
+
+	&__close {
+		grid-area: 1 / 7 / 2 / 8;
+		align-self: end;
+		text-align: right;
+	}
+}
+
+.container {
+	grid-template: repeat(8, 1fr) / repeat(8, 1fr);
+	grid-gap: $gutter;
+
+	display: grid;
+	height: inherit;
+}

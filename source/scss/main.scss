@@ -1,12 +1,91 @@
 @charset 'utf-8';
 
-@import './base/base';
-@import './base/grid';
-@import './base/utils';
+@import 'base/variables';
+@import 'base/layout';
 
-@import './modules/album';
-@import './modules/avatar';
-@import './modules/album-details';
-@import './modules/mediaplayer';
-@import './modules/search';
+//atomic
+//atoms
+@import 'base/base';
 
+//molecules
+@import 'modules/album-list';
+
+//pages
+@import 'modules/album-overview';
+@import 'modules/album-detail';
+
+// atoms
+.btn {
+	&--link{
+		background: none;
+		color: $text-color;
+	}
+
+	&--icon-only {
+		border: none;
+	}
+
+	&--l {
+		img, svg {
+			width: 24px;
+		}
+	}
+}
+
+.logo {
+	&--small {
+		text-align: right;
+		align-self: center;
+
+		svg, img {
+			width: 216px;
+		}
+	}
+}
+
+.close {
+	z-index: 999;
+	text-align: right;
+}
+
+// molecules
+
+
+.search {
+	position: relative;
+	pointer-events: visible;
+	border-bottom: $line-width-l $text-color solid;
+	background: $background-color;
+	z-index: 99;
+
+	input {
+		display: block;
+		width: 100%;
+		padding: $gutter 0;
+		margin: 0;
+		border: none;
+		background: none;
+		font-family:  "pragmatica-extended", Arial, sans-serif;
+		color: $text-color;
+		font-size: 1em;
+
+		&:focus {
+			box-shadow: none;
+			outline: none;
+		}
+	}
+
+	button {
+		position: absolute;
+		right: 0;
+		top: $gutter / 2;
+	}
+}
+
+.home {
+	.search {
+		input {
+			font-size: 1em;
+		}
+	}
+}
