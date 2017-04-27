@@ -4,6 +4,12 @@ class Utils {
 	static stripNumber(value) {
 		return value.replace(/ \([\d]+\)$/, '');
 	}
+
+	static isPictureDisc(album) {
+		const [{ descriptions }] = album.formats;
+
+		return descriptions && descriptions.indexOf('Picture Disc') > -1;
+	}
 }
 
 export default Utils;

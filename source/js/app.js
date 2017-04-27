@@ -114,6 +114,7 @@ const discofy = new Moon({
 							title: info.title,
 							year: info.year > 0 ? info.year : null,
 							thumb: info.thumb,
+							isPictureDisc: Utils.isPictureDisc(info),
 						};
 
 						return album;

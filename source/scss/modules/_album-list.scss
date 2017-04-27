@@ -7,7 +7,7 @@ $basename: ".albums";
 	padding: 0;
 
 	li {
-		//all list items have this styling	
+		//all list items have this styling
 		float:left;
 		list-style: none;
 		width: calc(25% - #{$gutter});
@@ -44,10 +44,6 @@ $basename: ".albums";
 			width: calc(50% - #{$gutter});
 		}
 
-		&__cover {
-			
-		}
-		
 		img {
 			height: calc(12.3vw - #{$gutter});
 			width: calc(12.3vw - #{$gutter});
@@ -61,7 +57,7 @@ $basename: ".albums";
 			font-family: "pragmatica-condenced", Arial, sans-serif;
 			line-height: 1.25;
 
-			.album-release{ 
+			.album-release{
 				position: absolute;
 				bottom: 19%;
 				left: 1%;
@@ -76,7 +72,7 @@ $basename: ".albums";
 					content: "’";
 				}
 			}
-			
+
 			.album-artist {
 				font-weight: 500;
 			}
@@ -126,4 +122,8 @@ $basename: ".albums";
 	}
 }
 
-
+.album__cover__img {
+	&--rounded {
+		border-radius: 50%;
+	}
+}

@@ -1,4 +1,4 @@
-const template = `<a href="detail.html"><img src="{{album.thumb}}" class="album__cover__img" alt="{{album.title}}"></a>
+const template = `<a href="detail.html"><img src="{{album.thumb}}" m-literal:class="{{album.isPictureDisc}} ? 'album__cover__img album__cover__img--rounded' : 'album__cover__img'" alt="{{album.title}}"></a>
 					<h2 class="albums__item__title">
 						<span class="album-release">{{album.year}}</span>
 						<span class="album-artist">

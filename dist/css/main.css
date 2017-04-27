@@ -219,6 +219,9 @@ button {
     .albums__item:nth-child(2n) {
       margin-top: 16.7%; }
 
+.album__cover__img--rounded {
+  border-radius: 50%; }
+
 .albums__account {
   text-align: right; }
   .albums__account h1 {
