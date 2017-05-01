@@ -48,13 +48,11 @@ const discofy = new Moon({
 		init() {
 			const localData = JSON.parse(localStorage.getItem('discofy'));
 
-			console.log(this.$data);
-
 			if (localData) {
 				// this.$data = localData;
 
 				// TODO: Figure out why we need to set collection to trigger the changes
-				this.set('collection', localData.collection);
+				// this.set('collection', localData.collection);
 			}
 		},
 		mounted() {
@@ -86,14 +84,28 @@ const discofy = new Moon({
 		setUserData() {
 			discogs.getUserData(this.get('id'))
 				.then((response) => {
+					/* eslint-disable camelcase */
+					const {
+						name,
+						username,
+						avatar_url,
+						num_collection,
+						num_wantlist,
+						location,
+						registered,
+					} = response;
+
 					this.set('user', {
 						show: true,
-						name: response.name,
-						username: response.username,
-						avatar: response.avatar_url,
-						ownedAmount: response.num_collection,
-						location: response.location,
+						name,
+						username,
+						avatar_url,
+						num_collection,
+						num_wantlist,
+						location,
+						registered: Utils.formatDate(registered),
 					});
+					/* eslint-enable camelcase */
 
 					this.callMethod('updateLocalStorage');
 				});
@@ -108,13 +120,18 @@ const discofy = new Moon({
 					const { releases } = response;
 					const albums = releases.map((release) => {
 						const info = release.basic_information;
+						const year = info.year ? info.year : null;
+
 						const album = {
 							id: info.id,
 							artists: info.artists.map(artist => Utils.stripNumber(artist.name)),
 							title: info.title,
-							year: info.year > 0 ? info.year : null,
+							year,
+							yearShort: Utils.getYearShort(year),
 							thumb: info.thumb,
 							isPictureDisc: Utils.isPictureDisc(info),
+							vinylColor: Utils.getVinylColor(info),
+							cssStyles: Utils.getCssStyles(info),
 						};
 
 						return album;

@@ -11,8 +11,8 @@
     <body>
         <div id="js-discofy" class="container albums">
 
-            <ol class="albums__list">
-                <li m-for="album in {{collection}}" class="albums__item">
+            <ol class="collection">
+                <li m-for="album in {{collection}}" class="collection__item">
                     <component-album m-literal:album="{{album}}"></component-album>
                 </li>
             </ol>

@@ -1,0 +1,176 @@
+$module: '.album';
+
+#{$module} {
+	margin-right: #{-1 * $gutter};
+	padding-left: 0;
+
+	cursor: pointer;
+
+	&:after {
+		position: absolute;
+		top: 0;
+		right: 0;
+		left: 0;
+
+		z-index: -1;
+
+		padding-bottom: 100%;
+
+		background: #111;
+		border-radius: 50%;
+
+		transition: transform 0.25s;
+		content: '';
+	}
+
+	&:hover:after {
+		transform: translateX(12.5%);
+
+		padding-bottom: 100%;
+
+		box-shadow: 0 #{$gutter / 2} $gutter rgba($text-color, 0.35);
+
+		transition-delay: 0.15s;
+	}
+
+	&--picture-disc {
+		background-size: 0;
+
+		&:after {
+			background-image: inherit;
+			background-size: cover;
+		}
+
+		&:hover:after {
+			transform: rotate(5deg) translateX(12.5%);
+
+			box-shadow: none;
+		}
+
+		#{$module}__cover {
+			position: relative;
+
+			background: white;
+			background-size: 0;
+			border: 1px solid rgba(black, 0.5);
+			opacity: 0.15;
+
+			&:after {
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+
+				box-shadow: inset 5px 5px 20px rgba(black, 0.4);
+
+				content: '';
+			}
+		}
+
+		#{$module}__visual {
+			position: relative;
+
+			border-radius: 50%;
+
+			visibility: hidden;
+		}
+	}
+
+	&--blue:after {
+		background: blue;
+	}
+
+	&--clear:after {
+		background: #fff;
+
+		opacity: 0.35;
+	}
+
+	&--gold:after {
+		background: goldenrod;
+	}
+
+	&--green:after {
+		background: limegreen;
+	}
+
+	&--orange:after {
+		background: orangered;
+	}
+
+	&--pink:after {
+		background: deeppink;
+	}
+
+	&--red:after {
+		background: red;
+	}
+
+	&--white:after {
+		background: whitesmoke;
+	}
+
+	&--yellow:after {
+		background: yellow;
+	}
+}
+
+#{$module}__cover {
+	width: calc(12.3vw - #{$gutter});
+	height: calc(12.3vw - #{$gutter});
+
+	box-shadow: 0 0 $gutter rgba($text-color, 0.25);
+
+	transition: transform 0.25s;
+
+	#{$module}:hover & {
+		transform: scale(1.075, 1.075);
+
+		box-shadow: 0 #{$gutter / 2} $gutter rgba($text-color, 0.5);
+	}
+}
+
+#{$module}__visual {
+	width: inherit;
+	height: inherit;
+}
+
+#{$module}__title {
+	margin-top: #{$gutter / 2};
+
+	font-size: 0.85em;
+	font-family: pragmatica-condenced, Arial, sans-serif;
+
+	line-height: 1.25;
+
+	.album-release {
+		position: absolute;
+		bottom: 19%;
+		left: 1%;
+
+		z-index: 15;
+
+		color: $background-color;
+		font-size: 2.5em;
+		font-family: pragmatica-extended, Arial, sans-serif;
+		font-weight: bold;
+		letter-spacing: -6px;
+
+		text-shadow: 1px 1px 1px black;
+
+		&:not(:empty):before {
+			content: '’';
+		}
+	}
+
+	.album-artist {
+		font-weight: 500;
+	}
+
+	.album-title {
+		&:before {
+			content: ' - ';
+		}
+	}
+}

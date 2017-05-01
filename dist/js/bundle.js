@@ -157,13 +157,11 @@ var discofy = new _moonjs2.default({
 		init: function init() {
 			var localData = JSON.parse(localStorage.getItem('discofy'));
 
-			console.log(this.$data);
-
 			if (localData) {
 				// this.$data = localData;
 
 				// TODO: Figure out why we need to set collection to trigger the changes
-				this.set('collection', localData.collection);
+				// this.set('collection', localData.collection);
 			}
 		},
 		mounted: function mounted() {
@@ -196,14 +194,27 @@ var discofy = new _moonjs2.default({
 			var _this2 = this;
 
 			_discogs2.default.getUserData(this.get('id')).then(function (response) {
+				/* eslint-disable camelcase */
+				var name = response.name,
+				    username = response.username,
+				    avatar_url = response.avatar_url,
+				    num_collection = response.num_collection,
+				    num_wantlist = response.num_wantlist,
+				    location = response.location,
+				    registered = response.registered;
+
+
 				_this2.set('user', {
 					show: true,
-					name: response.name,
-					username: response.username,
-					avatar: response.avatar_url,
-					ownedAmount: response.num_collection,
-					location: response.location
+					name: name,
+					username: username,
+					avatar_url: avatar_url,
+					num_collection: num_collection,
+					num_wantlist: num_wantlist,
+					location: location,
+					registered: _utils2.default.formatDate(registered)
 				});
+				/* eslint-enable camelcase */
 
 				_this2.callMethod('updateLocalStorage');
 			});
@@ -219,15 +230,20 @@ var discofy = new _moonjs2.default({
 
 				var albums = releases.map(function (release) {
 					var info = release.basic_information;
+					var year = info.year ? info.year : null;
+
 					var album = {
 						id: info.id,
 						artists: info.artists.map(function (artist) {
 							return _utils2.default.stripNumber(artist.name);
 						}),
 						title: info.title,
-						year: info.year > 0 ? info.year : null,
+						year: year,
+						yearShort: _utils2.default.getYearShort(year),
 						thumb: info.thumb,
-						isPictureDisc: _utils2.default.isPictureDisc(info)
+						isPictureDisc: _utils2.default.isPictureDisc(info),
+						vinylColor: _utils2.default.getVinylColor(info),
+						cssStyles: _utils2.default.getCssStyles(info)
 					};
 
 					return album;
@@ -487,7 +503,7 @@ exports.default = template;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-var template = "<a href=\"detail.html\"><img src=\"{{album.thumb}}\" m-literal:class=\"{{album.isPictureDisc}} ? 'album__cover__img album__cover__img--rounded' : 'album__cover__img'\" alt=\"{{album.title}}\"></a>\n\t\t\t\t\t<h2 class=\"albums__item__title\">\n\t\t\t\t\t\t<span class=\"album-release\">{{album.year}}</span>\n\t\t\t\t\t\t<span class=\"album-artist\">\n\t\t\t\t\t\t\t<ul m-for=\"artist in {{album.artists}}\">\n\t\t\t\t\t\t\t\t<li>{{artist}}</li>\n\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t</span><br>\n\t\t\t\t\t\t<span class=\"album-title\">{{album.title}}</span>\n\t\t\t\t\t</h2>";
+var template = "<div m-literal:class=\"['album', {{album.vinylColor}} ?  'album--' + {{album.vinylColor}} : '', {{album.isPictureDisc}} ?  'album--picture-disc' : '']\" m-literal:style=\"{{album.isPictureDisc}} ? {{album.cssStyles}} : ''\">\n\t\t\t\t\t<div class=\"album__cover\">\n\t\t\t\t\t\t<img src=\"{{album.thumb}}\" alt=\"{{album.title}}\" class=\"album__visual\">\n\t\t\t\t\t</div>\n\t\t\t\t\t<h2 class=\"album__title\">\n\t\t\t\t\t\t<span class=\"album-release\">{{album.yearShort}}</span>\n\t\t\t\t\t\t<span class=\"album-artist\">\n\t\t\t\t\t\t\t<span m-for=\"artist in {{album.artists}}\">\n\t\t\t\t\t\t\t\t{{artist}}\n\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t</span><br>\n\t\t\t\t\t\t<span class=\"album-title\">{{album.title}}</span>\n\t\t\t\t\t</h2>\n\t\t\t\t</div>";
 
 exports.default = template;
 
@@ -507,7 +523,7 @@ exports.default = template;
 Object.defineProperty(exports, "__esModule", {
 					value: true
 });
-var template = "<div class=\"albums__account\">\n\t\t\t\t\t<span><b>{{user.name}}</b></span>\n\t\t\t\t\t<span>{{user.location}}</span>\n\t\t\t\t\t<span>Joined on September 9, 2013</span>\n\t\t\t\t\t<h1>{{user.username}}</h1>\n\t\t\t\t\t<span>837 in Collection</span>\n\t\t\t\t\t<span>798 in Wantlist</span>\n\t\t\t\t</div>";
+var template = "<div class=\"albums__account\">\n\t\t\t\t\t<span><b>{{user.name}}</b></span>\n\t\t\t\t\t<span>{{user.location}}</span>\n\t\t\t\t\t<span>Joined on {{user.registered}}</span>\n\t\t\t\t\t<h1>{{user.username}}</h1>\n\t\t\t\t\t<span>{{user.num_collection}} in collection</span>\n\t\t\t\t\t<span>{{user.num_wantlist}} in wantlist</span>\n\t\t\t\t</div>";
 
 exports.default = template;
 
@@ -561,6 +577,56 @@ var Utils = function () {
 			    descriptions = _album$formats[0].descriptions;
 
 			return descriptions && descriptions.indexOf('Picture Disc') > -1;
+		}
+	}, {
+		key: 'formatDate',
+		value: function formatDate(date) {
+			var locale = 'en-US';
+			var options = {
+				year: 'numeric',
+				month: 'long',
+				day: 'numeric'
+			};
+
+			return new Intl.DateTimeFormat(locale, options).format(new Date(date));
+		}
+	}, {
+		key: 'getYearShort',
+		value: function getYearShort(year) {
+			if (!year) {
+				return '';
+			}
+
+			var toString = year.toString();
+
+			return toString.toString().substring(toString.length - 2);
+		}
+	}, {
+		key: 'getVinylColor',
+		value: function getVinylColor(album) {
+			var _album$formats2 = _slicedToArray(album.formats, 1),
+			    text = _album$formats2[0].text;
+
+			var vinylColor = void 0;
+
+			if (!text) {
+				return false;
+			}
+
+			var colors = ['blue', 'clear', 'gold', 'green', 'orange', 'pink', 'red', 'white', 'yellow'];
+
+			colors.forEach(function (color) {
+				if (text.toLowerCase().indexOf(color) > -1) {
+					vinylColor = color;
+				}
+			});
+
+			return vinylColor;
+		}
+	}, {
+		key: 'getCssStyles',
+		value: function getCssStyles(album) {
+			return 'background-image: url("' + album.thumb + '")';
 		}
 	}]);
 

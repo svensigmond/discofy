@@ -171,27 +171,8 @@ button {
       width: calc(12.3vw - 20px);
       box-shadow: 0 0 20px rgba(51, 95, 105, 0.25);
       transition: all 0.25s; }
-    .albums__item__title {
-      margin-top: 10px;
-      font-size: .85em;
-      font-family: "pragmatica-condenced", Arial, sans-serif;
-      line-height: 1.25; }
-      .albums__item__title .album-release {
-        position: absolute;
-        bottom: 19%;
-        left: 1%;
-        color: #F0ECCC;
-        font-size: 2.5em;
-        font-family: "pragmatica-extended", Arial, sans-serif;
-        font-weight: 700;
-        letter-spacing: -6px;
-        z-index: 15; }
-        .albums__item__title .album-release:before {
-          content: "’"; }
-      .albums__item__title .album-artist {
-        font-weight: 500; }
-      .albums__item__title .album-title:before {
-        content: " - "; }
+    .albums__item--clear {
+      color: #fff; }
     .albums__item:after {
       transition: all 0.25s;
       position: absolute;
@@ -221,6 +202,125 @@ button {
 
 .album__cover__img--rounded {
   border-radius: 50%; }
+
+.collection {
+  grid-area: 2 / 2 / 9 / 6;
+  align-self: start;
+  margin-right: -20px;
+  padding-left: 0; }
+
+.collection__item {
+  position: relative;
+  float: left;
+  box-sizing: border-box;
+  width: calc(25% - 20px);
+  margin: 0 -20px 20px 0;
+  padding-left: 0;
+  list-style: none; }
+  .collection__item:nth-child(2n) {
+    margin-top: 16.7%; }
+
+.album {
+  margin-right: -20px;
+  padding-left: 0;
+  cursor: pointer; }
+  .album:after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: -1;
+    padding-bottom: 100%;
+    background: #111;
+    border-radius: 50%;
+    transition: transform 0.25s;
+    content: ''; }
+  .album:hover:after {
+    transform: translateX(12.5%);
+    padding-bottom: 100%;
+    box-shadow: 0 10px 20px rgba(51, 95, 105, 0.35);
+    transition-delay: 0.15s; }
+  .album--picture-disc {
+    background-size: 0; }
+    .album--picture-disc:after {
+      background-image: inherit;
+      background-size: cover; }
+    .album--picture-disc:hover:after {
+      transform: rotate(5deg) translateX(12.5%);
+      box-shadow: none; }
+    .album--picture-disc .album__cover {
+      position: relative;
+      background: white;
+      background-size: 0;
+      border: 1px solid rgba(0, 0, 0, 0.5);
+      opacity: 0.15; }
+      .album--picture-disc .album__cover:after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        box-shadow: inset 5px 5px 20px rgba(0, 0, 0, 0.4);
+        content: ''; }
+    .album--picture-disc .album__visual {
+      position: relative;
+      border-radius: 50%;
+      visibility: hidden; }
+  .album--blue:after {
+    background: blue; }
+  .album--clear:after {
+    background: #fff;
+    opacity: 0.35; }
+  .album--gold:after {
+    background: goldenrod; }
+  .album--green:after {
+    background: limegreen; }
+  .album--orange:after {
+    background: orangered; }
+  .album--pink:after {
+    background: deeppink; }
+  .album--red:after {
+    background: red; }
+  .album--white:after {
+    background: whitesmoke; }
+  .album--yellow:after {
+    background: yellow; }
+
+.album__cover {
+  width: calc(12.3vw - 20px);
+  height: calc(12.3vw - 20px);
+  box-shadow: 0 0 20px rgba(51, 95, 105, 0.25);
+  transition: transform 0.25s; }
+  .album:hover .album__cover {
+    transform: scale(1.075, 1.075);
+    box-shadow: 0 10px 20px rgba(51, 95, 105, 0.5); }
+
+.album__visual {
+  width: inherit;
+  height: inherit; }
+
+.album__title {
+  margin-top: 10px;
+  font-size: 0.85em;
+  font-family: pragmatica-condenced, Arial, sans-serif;
+  line-height: 1.25; }
+  .album__title .album-release {
+    position: absolute;
+    bottom: 19%;
+    left: 1%;
+    z-index: 15;
+    color: #F0ECCC;
+    font-size: 2.5em;
+    font-family: pragmatica-extended, Arial, sans-serif;
+    font-weight: bold;
+    letter-spacing: -6px;
+    text-shadow: 1px 1px 1px black; }
+    .album__title .album-release:not(:empty):before {
+      content: '’'; }
+  .album__title .album-artist {
+    font-weight: 500; }
+  .album__title .album-title:before {
+    content: ' - '; }
 
 .albums__account {
   text-align: right; }
