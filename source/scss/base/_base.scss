@@ -1,31 +1,42 @@
-// Templating
-body {
-	grid-template: repeat(8, 1fr) / repeat(8, 1fr);
-	grid-gap: $gutter;
-}
-
-// setup basic elements
 html {
-	font-family: "pragmatica", Arial, sans-serif;
-	background-color: $background-color;
+	box-sizing: border-box;
+
 	margin: 0;
 	padding: 0;
+
+	font-family: pragmatica, Arial, sans-serif;
+
 	background: $background-color;
 }
 
+* { // stylelint-disable-line selector-no-universal
+	&,
+	&:before,
+	&:after {
+		box-sizing: inherit;
+	}
+}
+
 body {
+	overflow-x: hidden;
+
 	height: calc(100vh - 2 * #{$gutter});
 	margin: $gutter;
 	padding: 0;
+
 	color: $text-color;
-	overflow-x: hidden;
+
+	&.has-overlay { // stylelint-disable-line selector-no-qualifying-type
+		overflow-y: hidden;
+	}
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: "pragmatica-extended", Arial, sans-serif;
-	font-weight: 700;
-	line-height: 1;
 	margin: 0;
+
+	font-family: pragmatica-extended, Arial, sans-serif;
+	font-weight: bold;
+	line-height: 1;
 }
 
 h3 {
@@ -38,7 +49,7 @@ img {
 }
 
 b {
-	font-weight: 700;
+	font-weight: bold;
 }
 
 a {
@@ -47,20 +58,23 @@ a {
 }
 
 button {
-	background-color: $background-color;
-	color: $text-color;
-	border: none;
-	border-left: $line-width-l $text-color solid;
-	outline: none;
-	line-height: 1;
-	padding: $distance-s/2;
-	font-family: "pragmatica", Arial, sans-serif;
-	font-size: 1em;
-	cursor: pointer;
-	box-sizing: border-box;
 	margin: 0;
 
-	img, svg {
+	padding: $distance-s / 2;
+
+	color: $text-color;
+	font-size: 1em;
+	line-height: 1;
+
+	background-color: $background-color;
+	border: none;
+	border-left: $line-width-l $text-color solid;
+
+	outline: none;
+	cursor: pointer;
+
+	img,
+	svg {
 		width: 16px;
 	}
 }

@@ -342,6 +342,12 @@ var albumDetails = _moonjs2.default.component('component-album-details', {
 				_eventbus2.default.emit('mediaplayer:change', [previewUrl]);
 			});
 		}
+	},
+
+	hooks: {
+		mounted: function mounted() {
+			console.log(this.$data);
+		}
 	}
 });
 
@@ -386,20 +392,7 @@ var album2 = _moonjs2.default.component('component-album', {
 					genres: response.genres.join(', '),
 					styles: response.styles ? response.styles.join(', ') : null,
 					art: response.images[0].uri,
-					// trackList: response.tracklist.map((track) => {
-					// 	// let formattedTrack = '';
-
-					// 	// if (track.position) {
-					// 	// 	formattedTrack = `${track.position} - ${track.title}`;
-					// 	// } else {
-					// 	// 	formattedTrack = `${track.title}`;
-					// 	// }
-
-					// 	return track.title;
-					// }),
-					trackList: response.tracklist.map(function (track) {
-						return track.title;
-					}),
+					tracklist: response.tracklist,
 					discogsUrl: response.uri,
 					formats: response.formats.map(function (format) {
 						var descriptions = format.descriptions ? format.descriptions.join(', ') : null;
@@ -491,9 +484,9 @@ exports.default = user;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+	value: true
 });
-var template = "<div class=\"album-details\">\n    <img src=\"{{details.meta.art}}\">\n    <table>\n        <tbody>\n            <tr>\n                <th>Title:</th>\n                <td>{{details.title}}</td>\n            </tr>\n            <tr>\n                <th>Artists:</th>\n                <td>\n                    <ul class=\"list-unstyled\">\n                        <li m-for=\"artist in {{details.artists}}\">\n                            {{artist}}\n                        </li>\n                    </ul>\n                </td>\n            </tr>\n            <tr>\n                <th>Format:</th>\n                <td>\n                    <ul class=\"list-unstyled\" m-for=\"format in {{details.meta.formats}}\">\n                        <li>{{format}}</li>\n                    </ul>\n                </td>\n            </tr>\n            <tr>\n                <th>Released:</th>\n                <td>{{details.year}}</td>\n            </tr>\n            <tr>\n                <th>Genre:</th>\n                <td>{{details.meta.genres}}</td>\n            </tr>\n            <tr m-if=\"{{details.meta.styles}}\">\n                <th>Style:</th>\n                <td>{{details.meta.styles}}</td>\n            </tr>\n            <tr>\n                <th>Track list:</th>\n                <td>\n                    <ul class=\"list-unstyled\" m-if=\"{{details.meta.trackList}}\">\n                        <li m-for=\"track in {{details.meta.trackList}}\">{{track}} <button m-on:click=\"clickTrack({{track}})\">\uD83C\uDFB5</button></li>\n                    </ul>\n                </td>\n            </tr>\n            <tr>\n                <th>External:</th>\n                <td>\n                    <a href=\"{{details.meta.discogsUrl}}\">View on discogs</a>\n                </td>\n            </tr>\n        </tbody>\n    </table>\n</div>";
+var template = "<div class=\"album-detail container\">\n\t\t\t\t\t<div class=\"album-detail__cover\">\n\t\t\t\t\t\t<img src=\"{{details.meta.art}}\" alt=\"{{details.title}}\">\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"logo logo--small\">\n\t\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 141 24\">\n\t\t\t\t\t\t\t<title>logo-small</title>\n\t\t\t\t\t\t\t<path d=\"M15.42,6.26c1.7,0,3.59.1,5.09,1.55a5.43,5.43,0,0,1,1.52,4,5.5,5.5,0,0,1-1.52,4.1c-1.52,1.46-3.73,1.55-5.17,1.55H9.82V6.26Zm-2,8.55h1.41a4.12,4.12,0,0,0,2.5-.62,3.06,3.06,0,0,0,.94-2.35,3.06,3.06,0,0,0-.88-2.32,3.67,3.67,0,0,0-2.53-.62H13.37Z\" fill=\"currentColor\"></path>\n\t\t\t\t\t\t\t<path d=\"M27.5,6.26v11.2H23.95V6.26Z\" fill=\"currentColor\"></path>\n\t\t\t\t\t\t\t<path d=\"M32.81,13.8v.06A1.38,1.38,0,0,0,33.29,15a2.8,2.8,0,0,0,1.68.4,3.19,3.19,0,0,0,1.42-.22,1,1,0,0,0,.64-1,1,1,0,0,0-.74-.91A6.42,6.42,0,0,0,34.86,13l-1.63-.27A5.63,5.63,0,0,1,30,11.56a2.52,2.52,0,0,1-.7-1.86,3.2,3.2,0,0,1,1.62-3A7.48,7.48,0,0,1,34.79,6a7.43,7.43,0,0,1,3.86.77,2.87,2.87,0,0,1,1.55,2.79H36.75a1,1,0,0,0-.58-1,3.15,3.15,0,0,0-1.44-.22,3,3,0,0,0-1.34.24.91.91,0,0,0-.54.83c0,.56.48.72.77.8a15.21,15.21,0,0,0,1.71.32l1.39.21a6.24,6.24,0,0,1,2.95,1,2.89,2.89,0,0,1,1.12,2.43,3.32,3.32,0,0,1-1.33,2.77,7.38,7.38,0,0,1-4.35.93c-1.5,0-3.41,0-4.67-1.14a3.39,3.39,0,0,1-1.17-2.8V13.8Z\" fill=\"currentColor\"></path>\n\t\t\t\t\t\t\t<path d=\"M54.75,13.43A4.16,4.16,0,0,1,52.89,17a7.9,7.9,0,0,1-4.27.85,6.55,6.55,0,0,1-5-1.58,5.8,5.8,0,0,1-1.58-4.29,5.86,5.86,0,0,1,1.6-4.29,6.64,6.64,0,0,1,5-1.68,7.69,7.69,0,0,1,4.26.94,3.79,3.79,0,0,1,1.81,3.28H51.07a1.65,1.65,0,0,0-.72-1.25,2.9,2.9,0,0,0-1.63-.35,2.61,2.61,0,0,0-2,.77,3.7,3.7,0,0,0-.82,2.59,3.36,3.36,0,0,0,.85,2.5,2.78,2.78,0,0,0,2.1.74,2.62,2.62,0,0,0,1.66-.43,1.82,1.82,0,0,0,.69-1.31Z\" fill=\"currentColor\"></path>\n\t\t\t\t\t\t\t<path d=\"M65.45,10.12A3.84,3.84,0,0,1,67,13.4a3.84,3.84,0,0,1-1.55,3.28,8.06,8.06,0,0,1-8,0,3.84,3.84,0,0,1-1.55-3.28,3.84,3.84,0,0,1,1.55-3.28,8.06,8.06,0,0,1,8,0ZM60,11.65a2.42,2.42,0,0,0-.58,1.75A2.42,2.42,0,0,0,60,15.14a2.21,2.21,0,0,0,2.95,0,2.42,2.42,0,0,0,.58-1.74,2.42,2.42,0,0,0-.58-1.75,2.22,2.22,0,0,0-2.95,0Z\" fill=\"currentColor\"></path>\n\t\t\t\t\t\t\t<path d=\"M72.07,6.26v11.2H68.68V6.26Z\" fill=\"currentColor\"></path>\n\t\t\t\t\t\t\t<path d=\"M77.55,6.26v11.2H74.15V6.26Z\" fill=\"currentColor\"></path>\n\t\t\t\t\t\t\t<path d=\"M90,14.81a3.05,3.05,0,0,1-2.18,2.64,9.62,9.62,0,0,1-3,.32c-1.31,0-3.14,0-4.42-1.28a4,4,0,0,1-1.17-3,4.37,4.37,0,0,1,1.25-3.2A5.73,5.73,0,0,1,84.59,9,6.11,6.11,0,0,1,89,10.42a4.4,4.4,0,0,1,1.12,3.41V14H82.75v0a1.85,1.85,0,0,0,.53,1.26,2.31,2.31,0,0,0,1.55.46,2.94,2.94,0,0,0,1.2-.18,1,1,0,0,0,.66-.8Zm-3.27-2.34a1.57,1.57,0,0,0-.58-1.15A2.38,2.38,0,0,0,84.76,11a2.2,2.2,0,0,0-1.34.37,1.84,1.84,0,0,0-.64,1.15Z\" fill=\"currentColor\"></path>\n\t\t\t\t\t\t\t<path d=\"M98.43,12.38a1.16,1.16,0,0,0-.51-1,2.27,2.27,0,0,0-2.51.16,2.73,2.73,0,0,0-.62,1.92,2.54,2.54,0,0,0,.59,1.79,1.79,1.79,0,0,0,1.39.46,1.94,1.94,0,0,0,1.18-.3,1.37,1.37,0,0,0,.48-1.09h3.18a3.51,3.51,0,0,1-.93,2.37c-1,1-2.29,1.07-4.18,1.07a5.43,5.43,0,0,1-4-1.25,4.18,4.18,0,0,1-1.1-3,4.28,4.28,0,0,1,1.12-3.09,5.45,5.45,0,0,1,4-1.36,6.62,6.62,0,0,1,3.57.77,3,3,0,0,1,1.52,2.58Z\" fill=\"currentColor\"></path>\n\t\t\t\t\t\t\t<path d=\"M102.47,9.33h1.71V6.92h3.39V9.33h1.87v2h-1.87v2.77a1.61,1.61,0,0,0,.24,1.06,1.36,1.36,0,0,0,.94.29,2.3,2.3,0,0,0,.7-.11v2a6.13,6.13,0,0,1-2.11.27,3.59,3.59,0,0,1-2.51-.69,2.83,2.83,0,0,1-.66-2.21V11.38h-1.71Z\" fill=\"currentColor\"></path>\n\t\t\t\t\t\t\t<path d=\"M114.22,6.12V8.2h-3.39V6.12Zm0,3.22v8.13h-3.39V9.33Z\" fill=\"currentColor\"></path>\n\t\t\t\t\t\t\t<path d=\"M125.48,10.12A3.84,3.84,0,0,1,127,13.4a3.84,3.84,0,0,1-1.55,3.28,8.06,8.06,0,0,1-8,0,3.84,3.84,0,0,1-1.55-3.28,3.84,3.84,0,0,1,1.55-3.28,8.06,8.06,0,0,1,8,0ZM120,11.65a2.42,2.42,0,0,0-.58,1.75,2.41,2.41,0,0,0,.58,1.74,2.21,2.21,0,0,0,2.95,0,2.42,2.42,0,0,0,.58-1.74,2.42,2.42,0,0,0-.58-1.75,2.22,2.22,0,0,0-2.95,0Z\" fill=\"currentColor\"></path>\n\t\t\t\t\t\t\t<path d=\"M132,10.26a3.33,3.33,0,0,1,1.14-.83A4.51,4.51,0,0,1,135,9.08a4.17,4.17,0,0,1,2.88.9,3.67,3.67,0,0,1,.86,2.72v4.77h-3.38V13.24a2.26,2.26,0,0,0-.43-1.6,1.44,1.44,0,0,0-1-.35,1.6,1.6,0,0,0-1.26.51,3,3,0,0,0-.56,1.9v3.76h-3.39V9.33H132Z\" fill=\"currentColor\"></path>\n\t\t\t\t\t\t\t<line x1=\"8.5\" y1=\"6\" x2=\"8.5\" y2=\"17.5\" fill=\"none\" stroke=\"currentColor\" stroke-miterlimit=\"10\"></line>\n\t\t\t\t\t\t\t<line x1=\"6.5\" y1=\"6\" x2=\"6.5\" y2=\"17.5\" fill=\"none\" stroke=\"currentColor\" stroke-miterlimit=\"10\"></line>\n\t\t\t\t\t\t\t<line x1=\"4.5\" y1=\"6\" x2=\"4.5\" y2=\"17.5\" fill=\"none\" stroke=\"currentColor\" stroke-miterlimit=\"10\"></line>\n\t\t\t\t\t\t\t<line x1=\"2.5\" y1=\"6\" x2=\"2.5\" y2=\"17.5\" fill=\"none\" stroke=\"currentColor\" stroke-miterlimit=\"10\"></line>\n\t\t\t\t\t\t</svg>\n\t\t\t\t\t</div>\n\t\t\t\t\t<h1 class=\"album-detail__info\">\n\t\t\t\t\t\t\t<span m-for=\"artist in {{details.artists}}\">{{artist}}</span>\n\t\t\t\t\t\t- {{details.title}}\n\t\t\t\t\t</h1>\n\t\t\t\t\t<div class=\"album-detail__format\">\n\t\t\t\t\t\t<ul m-if=\"{{details.meta.formats}}\">\n\t\t\t\t\t\t\t<li m-for=\"format in {{details.meta.formats}}\">{{format}}</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</div>\n\t\t\t\t\t<ol class=\"tracklist\" m-if=\"{{details.meta.tracklist}}\">\n\t\t\t\t\t\t<li class=\"tracklist__item\" m-for=\"track in {{details.meta.tracklist}}\" data-track-position=\"{{track.position}}\">\n\t\t\t\t\t\t\t<span class=\"tracklist__title\" m-on:click=\"clickTrack({{track.title}})\">{{track.title}}</span>\n\t\t\t\t\t\t\t<span class=\"tracklist__duration\">{{track.duration}}</span>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t</ol>\n\t\t\t\t\t<div class=\"album-detail__release\">{{details.yearShort}}</div>\n\t\t\t\t\t<div class=\"album-detail__close\">\n\t\t\t\t\t\t<a href=\"album-overview.html\" class=\"btn--l btn--link btn--icon-only\">\n\t\t\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\" width=\"16\"><polygon points=\"15.71 1.71 14.29 0.29 8 6.59 1.71 0.29 0.29 1.71 6.59 8 0.29 14.29 1.71 15.71 8 9.41 14.29 15.71 15.71 14.29 9.41 8 15.71 1.71\" fill=\"currentColor\"></polygon></svg>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t</div>\n\t\t\t\t</div>";
 
 exports.default = template;
 
@@ -503,7 +496,7 @@ exports.default = template;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-var template = "<div m-literal:class=\"['album', {{album.vinylColor}} ?  'album--' + {{album.vinylColor}} : '', {{album.isPictureDisc}} ?  'album--picture-disc' : '']\" m-literal:style=\"{{album.isPictureDisc}} ? {{album.cssStyles}} : ''\">\n\t\t\t\t\t<div class=\"album__cover\">\n\t\t\t\t\t\t<img src=\"{{album.thumb}}\" alt=\"{{album.title}}\" class=\"album__visual\">\n\t\t\t\t\t</div>\n\t\t\t\t\t<h2 class=\"album__title\">\n\t\t\t\t\t\t<span class=\"album-release\">{{album.yearShort}}</span>\n\t\t\t\t\t\t<span class=\"album-artist\">\n\t\t\t\t\t\t\t<span m-for=\"artist in {{album.artists}}\">\n\t\t\t\t\t\t\t\t{{artist}}\n\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t</span><br>\n\t\t\t\t\t\t<span class=\"album-title\">{{album.title}}</span>\n\t\t\t\t\t</h2>\n\t\t\t\t</div>";
+var template = "<div m-on:click=\"setAlbumData\" m-literal:class=\"['album', {{album.vinylColor}} ?  'album--' + {{album.vinylColor}} : '', {{album.isPictureDisc}} ?  'album--picture-disc' : '']\" m-literal:style=\"{{album.isPictureDisc}} ? {{album.cssStyles}} : ''\">\n\t\t\t\t\t<div class=\"album__cover\">\n\t\t\t\t\t\t<img src=\"{{album.thumb}}\" alt=\"{{album.title}}\" class=\"album__visual\">\n\t\t\t\t\t</div>\n\t\t\t\t\t<h2 class=\"album__title\">\n\t\t\t\t\t\t<span class=\"album-release\">{{album.yearShort}}</span>\n\t\t\t\t\t\t<span class=\"album-artist\">\n\t\t\t\t\t\t\t<span m-for=\"artist in {{album.artists}}\">\n\t\t\t\t\t\t\t\t{{artist}}\n\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t</span><br>\n\t\t\t\t\t\t<span class=\"album-title\">{{album.title}}</span>\n\t\t\t\t\t</h2>\n\t\t\t\t</div>";
 
 exports.default = template;
 

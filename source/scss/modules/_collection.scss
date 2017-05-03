@@ -1,11 +1,12 @@
 $module: '.collection';
 
 #{$module} {
-	grid-area: 2 / 2 / 9 / 6;
 	align-self: start;
 
 	margin-right: #{-1 * $gutter};
 	padding-left: 0;
+
+	grid-area: 2 / 2 / 9 / 6;
 }
 
 #{$module}__item {
@@ -13,10 +14,8 @@ $module: '.collection';
 
 	float: left;
 
-	box-sizing: border-box;
-
 	width: calc(25% - #{$gutter});
-	margin: 0 #{-1 * $gutter} $gutter 0;
+	margin: 0 $gutter $gutter 0;
 	padding-left: 0;
 
 	list-style: none;

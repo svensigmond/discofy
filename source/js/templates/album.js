@@ -1,4 +1,4 @@
-const template = `<div m-literal:class="['album', {{album.vinylColor}} ?  'album--' + {{album.vinylColor}} : '', {{album.isPictureDisc}} ?  'album--picture-disc' : '']" m-literal:style="{{album.isPictureDisc}} ? {{album.cssStyles}} : ''">
+const template = `<div m-on:click="setAlbumData" m-literal:class="['album', {{album.vinylColor}} ?  'album--' + {{album.vinylColor}} : '', {{album.isPictureDisc}} ?  'album--picture-disc' : '']" m-literal:style="{{album.isPictureDisc}} ? {{album.cssStyles}} : ''">
 					<div class="album__cover">
 						<img src="{{album.thumb}}" alt="{{album.title}}" class="album__visual">
 					</div>

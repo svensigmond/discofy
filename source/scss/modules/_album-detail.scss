@@ -1,56 +1,56 @@
-$basename: ".album";
-#{$basename} {
-    &__info {
-        position: relative;
-        margin: 0;
-        padding: $distance-l;
-        outline: $line-width-l $text-color solid;
-        font-size: $distance-xxl;
-        line-height: 1;
-    }
+$module: '.album-detail';
 
-    &__format {
-        margin: 0;
-        padding: 0;
-        font-family: "pragmatica", Arial, sans-serif;
-        font-size: .85em;
-        font-family: "pragmatica-condenced", Arial, sans-serif;
-        font-weight: 500;
-        line-height: 1;
-    }
+#{$module} {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 124;
 
-    &__release {
-        position: absolute;
-        z-index: 9;
-        bottom: #{-2 * $gutter};
-        margin: 0;
-        padding: 0;
-        text-align: left;
-        font-size: 13em;
-        font-family: "pragmatica", Arial, sans-serif;
-        font-weight: 700;
-        color: $background-color;
+	// padding: $distance-l;
 
-        &:before {
-            content: "’";
-            //letter-spacing: -1.5em;
-        }
-    }
+	background: $background-color;
+}
 
-    &__tracklist {
-        margin: 0;
-        columns: 2;
-        column-gap: 3 * $gutter;
-        padding-left: $gutter;
-        font-family: "pragmatica", Arial, sans-serif;
-        font-weight: 500;
-        
-        .duration {        
-            color:rgba($text-color, 0.5);
+#{$module}__info {
+	position: relative;
 
-            &:before {
-                content: " - "
-            }
-        }
-    }
+	margin: 0;
+	padding: $distance-l;
+
+	font-size: $distance-xxl;
+	line-height: 1;
+
+	outline: $line-width-l $text-color solid;
+}
+
+#{$module}__format {
+	margin: 0;
+	padding: 0;
+
+	// font-family: pragmatica, Arial, sans-serif;
+	font-size: 0.85em;
+	font-family: pragmatica-condenced, Arial, sans-serif;
+}
+
+#{$module}__release {
+	position: absolute;
+	bottom: #{-2 * $gutter};
+	z-index: 9;
+
+	margin: 0;
+	padding: 0;
+
+	color: $background-color;
+	font-size: 13em;
+	font-family: pragmatica, Arial, sans-serif;
+	font-weight: bold;
+	line-height: normal;
+	text-align: left;
+
+
+	&:before {
+		content: '’';
+	}
 }

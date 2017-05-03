@@ -1,0 +1,38 @@
+$module: '.tracklist';
+
+#{$module} {
+	align-self: end;
+
+	margin: 0;
+	// padding-left: $gutter;
+
+	font-family: pragmatica, Arial, sans-serif;
+
+	list-style: none;
+
+	grid-area: 6 / 5 / 8 / 8;
+	columns: 2;
+	column-gap: 3 * $gutter;
+}
+
+#{$module}__item {
+	&:before {
+		position: absolute;
+
+		transform: translateX(-100%);
+
+		content: attr(data-track-position) '.';
+	}
+}
+
+#{$module}__title {
+	margin-left: 4px;
+}
+
+#{$module}__duration {
+	color: rgba($text-color, 0.5);
+
+	&:before {
+		content: ' - ';
+	}
+}

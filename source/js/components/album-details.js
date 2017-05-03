@@ -25,6 +25,12 @@ const albumDetails = Moon.component('component-album-details', {
 				});
 		},
 	},
+
+	hooks: {
+		mounted() {
+			console.log(this.$data);
+		},
+	},
 });
 
 export default albumDetails;
