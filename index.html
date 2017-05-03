@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="./dist/css/main.css" />
     </head>
     <body>
-        <div id="js-discofy" class="container albums">
+        <div id="js-discofy" m-literal:class="['container albums', {{details.show}} ? 'has-overlay' : '']">
 
             <ol class="collection">
                 <li m-for="album in {{collection}}" class="collection__item">

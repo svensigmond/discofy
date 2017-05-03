@@ -25,10 +25,6 @@ body {
 	padding: 0;
 
 	color: $text-color;
-
-	&.has-overlay { // stylelint-disable-line selector-no-qualifying-type
-		overflow-y: hidden;
-	}
 }
 
 h1, h2, h3, h4, h5, h6 {

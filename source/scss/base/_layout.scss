@@ -103,4 +103,10 @@
 
 	display: grid;
 	height: inherit;
+
+	&.has-overlay { // stylelint-disable-line selector-no-qualifying-type
+		overflow-y: hidden;
+
+		height: 100%;
+	}
 }
