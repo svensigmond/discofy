@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="/dist/css/main.css" />
     </head>
     <body>
-        <div id="js-vue" class="container albums" v-bind:class="{ 'has-overlay': details.show }">
+        <div id="js-vue" class="container albums" v-bind:class="{'has-overlay': showDetails}">
             <ol class="collection" v-if="collection.length">
                 <li v-for="album in collection" class="collection__item">
                     <component-album v-bind:album="album"></component-album>
