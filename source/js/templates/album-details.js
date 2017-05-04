@@ -1,6 +1,6 @@
 const template = `<div class="album-detail container">
 					<div class="album-detail__cover">
-						<img src="{{details.meta.art}}" alt="{{details.title}}">
+						<img :src="details.meta.art" :alt="details.title">
 					</div>
 					<div class="logo logo--small">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 141 24">
@@ -25,25 +25,25 @@ const template = `<div class="album-detail container">
 						</svg>
 					</div>
 					<h1 class="album-detail__info">
-							<span m-for="artist in {{details.artists}}">{{artist}}</span>
+							<span v-for="artist in details.artists">{{artist}}</span>
 						- {{details.title}}
 					</h1>
 					<div class="album-detail__format">
-						<ul m-if="{{details.meta.formats}}">
-							<li m-for="format in {{details.meta.formats}}">{{format}}</li>
+						<ul v-if="details.meta.formats">
+							<li v-for="format in details.meta.formats">{{format}}</li>
 						</ul>
 					</div>
-					<ol class="tracklist" m-if="{{details.meta.tracklist}}">
-						<li class="tracklist__item" m-for="track in {{details.meta.tracklist}}" data-track-position="{{track.position}}">
-							<span class="tracklist__title" m-on:click="clickTrack({{track.title}})">{{track.title}}</span>
+					<ol class="tracklist" v-if="details.meta.tracklist">
+						<li class="tracklist__item" v-for="track in details.meta.tracklist" :data-track-position="track.position">
+							<span class="tracklist__title" v-on:click="clickTrack(track.title)">{{track.title}}</span>
 							<span class="tracklist__duration">{{track.duration}}</span>
 						</li>
 					</ol>
 					<div class="album-detail__release">{{details.yearShort}}</div>
-					<div class="album-detail__close">
-						<a href="album-overview.html" class="btn--l btn--link btn--icon-only">
+					<div class="album-detail__close" v-on:click="onClose">
+						<span class="btn--l btn--link btn--icon-only">
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16"><polygon points="15.71 1.71 14.29 0.29 8 6.59 1.71 0.29 0.29 1.71 6.59 8 0.29 14.29 1.71 15.71 8 9.41 14.29 15.71 15.71 14.29 9.41 8 15.71 1.71" fill="currentColor"></polygon></svg>
-						</a>
+						</span>
 					</div>
 				</div>`;
 

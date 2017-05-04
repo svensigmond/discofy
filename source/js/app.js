@@ -1,88 +1,91 @@
-import Moon from 'moonjs';
+import Vue from 'vue/dist/vue.js';
 import Utils from './utils/utils';
 import eventbus from './utils/eventbus';
 import discogs from './api/discogs';
 
-import './components/album-details';
 import './components/album';
-import './components/media-player';
+import './components/album-details';
 import './components/user';
+// import './components/media-player';
 
-const discofy = new Moon({
-	el: '#js-discofy',
-	data: {
-		id: 'edw1n',
-		user: {
-			show: false,
-		},
-		collection: [],
-		pagination: {},
-		sorting: {
-			active: 0,
-			options: [
-				{
-					sort: 'added',
-					order: 'desc',
-				},
-				{
-					sort: 'artist',
-					order: 'asc',
-				},
-				{
-					sort: 'title',
-					order: 'asc',
-				},
-				{
-					sort: 'year',
-					order: 'asc',
-				},
-			],
-		},
-		details: {
-			show: false,
-		},
-		mediaUrl: '',
+const discollection = new Vue({
+	el: '#js-vue',
+	data() {
+		return {
+			id: 'edw1n',
+			user: {
+				show: false,
+			},
+			collection: [],
+			pagination: {},
+			sorting: {
+				active: 0,
+				options: [
+					{
+						sort: 'added',
+						order: 'desc',
+					},
+					{
+						sort: 'artist',
+						order: 'asc',
+					},
+					{
+						sort: 'title',
+						order: 'asc',
+					},
+					{
+						sort: 'year',
+						order: 'asc',
+					},
+				],
+			},
+			details: {},
+			showDetails: false,
+			mediaUrl: '',
+		};
 	},
 
-	hooks: {
-		init() {
-			const localData = JSON.parse(localStorage.getItem('discofy'));
+	init() {
+		const localData = JSON.parse(localStorage.getItem('discofy'));
 
-			if (localData) {
-				// this.$data = localData;
+		if (localData) {
+			// this.$data = localData;
 
-				// TODO: Figure out why we need to set collection to trigger the changes
-				// this.set('collection', localData.collection);
-			}
-		},
-		mounted() {
-			eventbus.on('mediaplayer:change', (url) => {
-				this.set('mediaUrl', url);
-			});
+			// TODO: Figure out why we need to set collection to trigger the changes
+			// this.set('collection', localData.collection);
+		}
+	},
+	mounted() {
+		// eventbus.on('mediaplayer:change', (url) => {
+		// 	this.set('mediaUrl', url);
+		// });
 
-			eventbus.on('update:details', (data) => {
-				this.set('details', data.album);
-				this.set('details.show', true);
-			});
-		},
+		eventbus.$on('detail:close', () => {
+			this.showDetails = false;
+		});
 
-		updated() {
-			const mediaUrl = this.get('mediaUrl');
+		eventbus.$on('update:details', (data) => {
+			this.details = data;
+			this.showDetails = true;
+		});
+	},
 
-			if (mediaUrl) {
-				eventbus.emit('mediaplayer:play');
-			}
-		},
+	updated() {
+		const { mediaUrl } = this;
+
+		if (mediaUrl) {
+			eventbus.$emit('mediaplayer:play');
+		}
 	},
 
 	methods: {
-		getData(e) {
-			this.callMethod('setUserData');
-			this.callMethod('setCollectionData');
+		getData() {
+			this.setUserData();
+			this.setCollectionData();
 		},
 
 		setUserData() {
-			discogs.getUserData(this.get('id'))
+			discogs.getUserData(this.id)
 				.then((response) => {
 					/* eslint-disable camelcase */
 					const {
@@ -95,7 +98,7 @@ const discofy = new Moon({
 						registered,
 					} = response;
 
-					this.set('user', {
+					this.user = {
 						show: true,
 						name,
 						username,
@@ -104,18 +107,18 @@ const discofy = new Moon({
 						num_wantlist,
 						location,
 						registered: Utils.formatDate(registered),
-					});
+					};
 					/* eslint-enable camelcase */
 
-					this.callMethod('updateLocalStorage');
+					this.updateLocalStorage();
 				});
 		},
 
 		setCollectionData(url) {
-			const sorting = this.get('sorting');
+			const { sorting } = this;
 			const activeSorting = sorting.options[sorting.active];
 
-			discogs.getCollectionData(this.get('id'), url, activeSorting)
+			discogs.getCollectionData(this.id, url, activeSorting)
 				.then((response) => {
 					const { releases } = response;
 					const albums = releases.map((release) => {
@@ -146,21 +149,23 @@ const discofy = new Moon({
 						},
 					};
 
-					this.set('collection', albums);
-					this.set('pagination', pagination);
+					this.collection = albums;
+					this.pagination = pagination;
 
-					this.callMethod('updateLocalStorage');
+					// console.log(this.collection);
+
+					this.updateLocalStorage();
 				});
 		},
 
 		paginate(action) {
-			const pagination = this.get('pagination');
+			// const pagination = this.pagination;
 
-			this.callMethod('setCollectionData', [pagination.urls[action]]);
+			// this.callMethod('setCollectionData', [pagination.urls[action]]);
 		},
 
 		sort(option, index) {
-			const sorting = this.get('sorting');
+			const { sorting } = this;
 
 			if (sorting.options[sorting.active].sort === option.sort) {
 				if (option.order === 'desc') {
@@ -173,9 +178,9 @@ const discofy = new Moon({
 			sorting.active = index;
 			sorting.options[index] = option;
 
-			this.set('sorting', sorting);
+			this.sorting = sorting;
 
-			this.callMethod('setCollectionData');
+			this.setCollectionData();
 		},
 
 		updateLocalStorage() {
@@ -186,4 +191,4 @@ const discofy = new Moon({
 	},
 });
 
-window.discofy = discofy;
+window.discofy = discollection;

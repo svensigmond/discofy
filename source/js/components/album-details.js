@@ -1,14 +1,14 @@
-import Moon from 'moonjs';
+import Vue from 'vue/dist/vue.js';
 import eventbus from '../utils/eventbus';
 import Spotify from '../api/spotify';
 import template from '../templates/album-details';
 
-const albumDetails = Moon.component('component-album-details', {
+const albumDetails = Vue.component('component-album-details', {
 	props: ['details'],
 	template,
 	methods: {
 		clickTrack(track) {
-			const details = this.get('details');
+			const { details } = this;
 			const artists = details.artists.join();
 			const query = `${artists} ${track}`;
 
@@ -24,11 +24,9 @@ const albumDetails = Moon.component('component-album-details', {
 					eventbus.emit('mediaplayer:change', [previewUrl]);
 				});
 		},
-	},
 
-	hooks: {
-		mounted() {
-			console.log(this.$data);
+		onClose() {
+			eventbus.$emit('detail:close');
 		},
 	},
 });

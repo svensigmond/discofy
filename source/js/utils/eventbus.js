@@ -1,5 +1,5 @@
-import Moon from 'moonjs';
+import Vue from 'vue';
 
-const eventbus = new Moon();
+const eventbus = new Vue();
 
 export default eventbus;

@@ -30,6 +30,6 @@
   "private": true,
   "dependencies": {
     "ezpz-grid": "^3.0.1",
-    "moonjs": "^0.9.0"
+    "vue": "^2.3.2"
   }
 }

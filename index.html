@@ -6,17 +6,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/6.0.0/normalize.min.css" />
-        <link rel="stylesheet" href="./dist/css/main.css" />
+        <link rel="stylesheet" href="/dist/css/main.css" />
     </head>
     <body>
-        <div id="js-discofy" m-literal:class="['container albums', {{details.show}} ? 'has-overlay' : '']">
-
-            <ol class="collection">
-                <li m-for="album in {{collection}}" class="collection__item">
-                    <component-album m-literal:album="{{album}}"></component-album>
+        <div id="js-vue" class="container albums" v-bind:class="{ 'has-overlay': details.show }">
+            <ol class="collection" v-if="collection.length">
+                <li v-for="album in collection" class="collection__item">
+                    <component-album v-bind:album="album"></component-album>
                 </li>
             </ol>
-
             <div class="albums__interface">
                 <div class="albums__logo logo--small">
                     <a href="index.html">
@@ -42,41 +40,15 @@
                         </svg>
                     </a>
                 </div>
-                <nav class="albums__controls" m-if={{pagination.range}}>
-                    <strong>Showing: {{pagination.range.low}}-{{pagination.range.high}} of {{pagination.items}} releases</strong>
-                    <h3>Sort on:</h3>
-                    <button m-if="{{pagination.urls.prev}}" m-on:click="paginate('prev')" class="sort-btn js-prev">Previous</button>
-                    <button type="button" m-for="option, index in {{sorting.options}}" m-on:click="sort({{option}}, {{index}})" m-literal:class="{{sorting.active}} === {{index}} ? 'sort-btn text-bold' : 'sort-btn'">
-                        {{option.sort}}
-                        <span m-if="option.order === 'asc'">▴</span>
-                        <span m-if="option.order === 'desc'">▾</span>
-                    </button>
-                    <button m-if="{{pagination.urls.next}}" m-on:click="paginate('next')" class="sort-btn js-next">Next</button>
-                </nav>
-                <nav class="albums__navigation">
-                    <h3>Go to page:</h3>
-                    <ol>
-                        <li class="active"><a href="#">a - c</a></li>
-                        <li><a href="#">d - e</a></li>
-                        <li><a href="#">f - h</a></li>
-                        <li><a href="#">i - k</a></li>
-                        <li><a href="#">l</a></li>
-                        <li><a href="#">m - n</a></li>
-                        <li><a href="#">o - q</a></li>
-                        <li><a href="#">r - s</a></li>
-                        <li><a href="#">s - v</a></li>
-                        <li><a href="#">x - z</a></li>
-                    </ol>
-                </nav>
 
-                <component-user m-if="{{user.show}}" m-literal:user="{{user}}"></component-user>
+                <component-user v-if="user.show" v-bind:user="user"></component-user>
 
                 <div class="search">
-                    <input type="text" placeholder="search a Discogs user" m-model="id" m-on:keyup.enter="getData">
+                    <input type="text" placeholder="search a Discogs user" v-model="id" v-on:keyup.enter="getData">
                     <button class="btn--link btn--l btn--icon-only"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M15.62,14.38,10.47,9.23a5,5,0,1,0-1.24,1.24l5.15,5.15ZM3,6.38A3.34,3.34,0,1,1,6.38,9.71,3.34,3.34,0,0,1,3,6.38Z" fill="currentColor"/></svg></button>
                 </div>
             </div>
-            <component-album-details m-if="{{details.show}}" m-literal:details="{{details}}"></component-album-details>
+            <component-album-details v-if="showDetails" v-bind:details="details"></component-album-details>
         </div>
 
         <script src="/dist/js/bundle.js"></script>

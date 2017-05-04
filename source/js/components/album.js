@@ -1,14 +1,14 @@
-import Moon from 'moonjs';
+import Vue from 'vue/dist/vue.js';
 import eventbus from '../utils/eventbus';
 import discogs from '../api/discogs';
 import template from '../templates/album';
 
-const album2 = Moon.component('component-album', {
+const album2 = Vue.component('component-album', {
 	props: ['album'],
 	template,
 	methods: {
 		setAlbumData() {
-			const album = this.get('album');
+			const { album } = this;
 
 			discogs.getAlbumData(album.id)
 				.then((response) => {
@@ -24,11 +24,10 @@ const album2 = Moon.component('component-album', {
 							return `${format.qty}x ${descriptions}`;
 						}),
 					};
-
-					this.set('album', album);
 				})
 				.then(() => {
-					eventbus.emit('update:details', this.$data);
+					console.log(this);
+					eventbus.$emit('update:details', this.album);
 				});
 		},
 	},
