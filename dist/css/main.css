@@ -54,10 +54,6 @@
   grid-area: 1 / 2 / 8 / 5;
   align-self: end; }
 
-.album-detail__info {
-  grid-area: 4 / 3 / 6 / 8;
-  align-self: start; }
-
 .album-detail__format {
   grid-area: 3 / 5 / 4 / 9;
   align-self: end; }
@@ -90,7 +86,7 @@ html {
   margin: 0;
   padding: 0;
   font-family: pragmatica, Arial, sans-serif;
-  background: #f0eeee; }
+  background: #f0eccc; }
 
 *, *:before, *:after {
   box-sizing: inherit; }
@@ -129,7 +125,7 @@ button {
   color: #335f69;
   font-size: 1em;
   line-height: 1;
-  background-color: #f0eeee;
+  background-color: #f0eccc;
   border: none;
   border-left: 4px #335f69 solid;
   outline: none;
@@ -253,7 +249,7 @@ button {
     position: absolute;
     bottom: 19%;
     left: 1%;
-    color: #f0eeee;
+    color: #f0eccc;
     font-size: 2.5em;
     font-family: pragmatica-extended, Arial, sans-serif;
     font-weight: bold;
@@ -296,7 +292,7 @@ button {
         padding: 10px;
         text-decoration: none; }
         .albums__navigation ol li a.active, .albums__navigation ol li a:hover {
-          color: #f0eeee;
+          color: #f0eccc;
           background: #335f69; }
 
 .albums__controls {
@@ -309,10 +305,10 @@ button {
     line-height: 2;
     text-align: left; }
     .albums__controls .sort-btn:hover {
-      color: #f0eeee;
+      color: #f0eccc;
       background: #335f69; }
   .albums__controls .active {
-    color: #f0eeee;
+    color: #f0eccc;
     background: #335f69; }
   .albums__controls h3 {
     padding: 10px 0;
@@ -325,15 +321,7 @@ button {
   bottom: 0;
   left: 0;
   z-index: 3;
-  background: #f0eeee; }
-
-.album-detail__info {
-  position: relative;
-  margin: 0;
-  padding: 30px;
-  font-size: 60px;
-  line-height: 1;
-  outline: 4px #335f69 solid; }
+  background: #f0eccc; }
 
 .album-detail__format {
   margin: 0;
@@ -347,7 +335,7 @@ button {
   z-index: 1;
   margin: 0;
   padding: 0;
-  color: #f0eeee;
+  color: #f0eccc;
   font-size: 13em;
   font-family: pragmatica, Arial, sans-serif;
   font-weight: bold;
@@ -362,6 +350,16 @@ button {
   left: 50%;
   z-index: 5;
   transform: translateX(-50%); }
+
+.title {
+  position: relative;
+  align-self: start;
+  margin: 0;
+  padding: 30px;
+  font-size: 60px;
+  line-height: 1;
+  outline: 4px #335f69 solid;
+  grid-area: 4 / 3 / 6 / 8; }
 
 .tracklist {
   align-self: end;
@@ -387,8 +385,8 @@ button {
     content: ' - '; }
 
 .logo--small {
-  text-align: right;
-  align-self: center; }
+  align-self: center;
+  text-align: right; }
   .logo--small svg, .logo--small img {
     width: 216px; }
 
@@ -400,7 +398,7 @@ button {
   position: relative;
   pointer-events: visible;
   border-bottom: 4px #335f69 solid;
-  background: #f0eeee;
+  background: #f0eccc;
   z-index: 1; }
   .search input {
     display: block;

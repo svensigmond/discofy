@@ -24,9 +24,8 @@ const template = `<div class="album-detail container">
 							<line x1="2.5" y1="6" x2="2.5" y2="17.5" fill="none" stroke="currentColor" stroke-miterlimit="10"></line>
 						</svg>
 					</div>
-					<h1 class="album-detail__info">
-							<span v-for="artist in details.artists">{{artist}}</span>
-						- {{details.title}}
+					<h1 class="title">
+						<span v-for="artist in details.artists">{{artist}}</span> &dash; {{details.title}}
 					</h1>
 					<div class="album-detail__format">
 						<ul v-if="details.meta.formats">

@@ -11,18 +11,6 @@ $module: '.album-detail';
 	background: $background-color;
 }
 
-#{$module}__info {
-	position: relative;
-
-	margin: 0;
-	padding: $distance-l;
-
-	font-size: $distance-xxl;
-	line-height: 1;
-
-	outline: $line-width-l $text-color solid;
-}
-
 #{$module}__format {
 	margin: 0;
 	padding: 0;

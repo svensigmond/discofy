@@ -13,12 +13,14 @@
 @import 'modules/albums';
 @import 'modules/album-detail';
 @import 'modules/media-player';
+@import 'modules/title';
 @import 'modules/tracklist';
 
 .logo {
 	&--small {
-		text-align: right;
 		align-self: center;
+
+		text-align: right;
 
 		svg, img {
 			width: 216px;
