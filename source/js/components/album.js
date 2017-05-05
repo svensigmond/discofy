@@ -26,7 +26,6 @@ const album2 = Vue.component('component-album', {
 					};
 				})
 				.then(() => {
-					console.log(this);
 					eventbus.$emit('update:details', this.album);
 				});
 		},

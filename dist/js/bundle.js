@@ -17023,9 +17023,9 @@ require('./components/album-details');
 
 require('./components/user');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+require('./components/media-player');
 
-// import './components/media-player';
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var discollection = new _vue2.default({
 	el: '#js-vue',
@@ -17071,9 +17071,9 @@ var discollection = new _vue2.default({
 	mounted: function mounted() {
 		var _this = this;
 
-		// eventbus.on('mediaplayer:change', (url) => {
-		// 	this.set('mediaUrl', url);
-		// });
+		_eventbus2.default.$on('mediaplayer:change', function (url) {
+			_this.mediaUrl = url;
+		});
 
 		_eventbus2.default.$on('detail:close', function () {
 			_this.showDetails = false;
@@ -17171,8 +17171,6 @@ var discollection = new _vue2.default({
 				_this3.collection = albums;
 				_this3.pagination = pagination;
 
-				// console.log(this.collection);
-
 				_this3.updateLocalStorage();
 			});
 		},
@@ -17210,7 +17208,7 @@ var discollection = new _vue2.default({
 
 window.discofy = discollection;
 
-},{"./api/discogs":4,"./components/album":8,"./components/album-details":7,"./components/user":9,"./utils/eventbus":13,"./utils/utils":14,"vue/dist/vue.js":2}],7:[function(require,module,exports){
+},{"./api/discogs":4,"./components/album":8,"./components/album-details":7,"./components/media-player":9,"./components/user":10,"./utils/eventbus":15,"./utils/utils":16,"vue/dist/vue.js":2}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -17253,7 +17251,7 @@ var albumDetails = _vue2.default.component('component-album-details', {
 					return;
 				}
 
-				_eventbus2.default.emit('mediaplayer:change', [previewUrl]);
+				_eventbus2.default.$emit('mediaplayer:change', previewUrl);
 			});
 		},
 		onClose: function onClose() {
@@ -17264,7 +17262,7 @@ var albumDetails = _vue2.default.component('component-album-details', {
 
 exports.default = albumDetails;
 
-},{"../api/spotify":5,"../templates/album-details":10,"../utils/eventbus":13,"vue/dist/vue.js":2}],8:[function(require,module,exports){
+},{"../api/spotify":5,"../templates/album-details":11,"../utils/eventbus":15,"vue/dist/vue.js":2}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -17313,7 +17311,6 @@ var album2 = _vue2.default.component('component-album', {
 					})
 				};
 			}).then(function () {
-				console.log(_this);
 				_eventbus2.default.$emit('update:details', _this.album);
 			});
 		}
@@ -17322,7 +17319,51 @@ var album2 = _vue2.default.component('component-album', {
 
 exports.default = album2;
 
-},{"../api/discogs":4,"../templates/album":11,"../utils/eventbus":13,"vue/dist/vue.js":2}],9:[function(require,module,exports){
+},{"../api/discogs":4,"../templates/album":12,"../utils/eventbus":15,"vue/dist/vue.js":2}],9:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _vue = require('vue/dist/vue.js');
+
+var _vue2 = _interopRequireDefault(_vue);
+
+var _mediaPlayer = require('../templates/media-player');
+
+var _mediaPlayer2 = _interopRequireDefault(_mediaPlayer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mediaPlayer = _vue2.default.component('component-media-player', {
+	props: ['src'],
+	template: _mediaPlayer2.default,
+	mounted: function mounted() {
+		this.player = this.$el.querySelector('audio');
+	},
+
+	watch: {
+		src: function src() {
+			// eslint-disable-line object-shorthand
+			this.playAudio();
+		}
+	},
+	methods: {
+		playAudio: function playAudio() {
+			var player = this.player;
+
+
+			player.oncanplaythrough = function () {
+				return player.play();
+			};
+		}
+	}
+});
+
+exports.default = mediaPlayer;
+
+},{"../templates/media-player":13,"vue/dist/vue.js":2}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -17346,7 +17387,7 @@ var user = _vue2.default.component('component-user', {
 
 exports.default = user;
 
-},{"../templates/user":12,"vue/dist/vue.js":2}],10:[function(require,module,exports){
+},{"../templates/user":14,"vue/dist/vue.js":2}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -17356,7 +17397,7 @@ var template = "<div class=\"album-detail container\">\n\t\t\t\t\t<div class=\"a
 
 exports.default = template;
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -17366,7 +17407,17 @@ var template = "<div v-on:click=\"setAlbumData\" class=\"album\"\n\t\t\t\t\t\tv-
 
 exports.default = template;
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var template = "<div class=\"media-player\">\n\t<audio controls=\"true\" :src=\"src\">\n\t\tYour browser does not support the <code>audio</code> element.\n\t</audio>\n</div>";
+
+exports.default = template;
+
+},{}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -17376,7 +17427,7 @@ var template = "<div class=\"albums__account\">\n\t\t\t\t\t<span><b>{{user.name}
 
 exports.default = template;
 
-},{}],13:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -17393,7 +17444,7 @@ var eventbus = new _vue2.default();
 
 exports.default = eventbus;
 
-},{"vue":3}],14:[function(require,module,exports){
+},{"vue":3}],16:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

@@ -14,6 +14,7 @@
 @import 'modules/album';
 @import 'modules/album-overview';
 @import 'modules/album-detail';
+@import 'modules/media-player';
 @import 'modules/tracklist';
 
 // atoms
@@ -46,7 +47,7 @@
 }
 
 .close {
-	z-index: 999;
+	z-index: 5;
 	text-align: right;
 }
 
@@ -58,7 +59,7 @@
 	pointer-events: visible;
 	border-bottom: $line-width-l $text-color solid;
 	background: $background-color;
-	z-index: 99;
+	z-index: 1;
 
 	input {
 		display: block;

@@ -6,7 +6,7 @@ import discogs from './api/discogs';
 import './components/album';
 import './components/album-details';
 import './components/user';
-// import './components/media-player';
+import './components/media-player';
 
 const discollection = new Vue({
 	el: '#js-vue',
@@ -56,9 +56,9 @@ const discollection = new Vue({
 		}
 	},
 	mounted() {
-		// eventbus.on('mediaplayer:change', (url) => {
-		// 	this.set('mediaUrl', url);
-		// });
+		eventbus.$on('mediaplayer:change', (url) => {
+			this.mediaUrl = url;
+		});
 
 		eventbus.$on('detail:close', () => {
 			this.showDetails = false;
@@ -151,8 +151,6 @@ const discollection = new Vue({
 
 					this.collection = albums;
 					this.pagination = pagination;
-
-					// console.log(this.collection);
 
 					this.updateLocalStorage();
 				});

@@ -27,12 +27,14 @@ $module: '.tracklist';
 
 #{$module}__title {
 	margin-left: 4px;
+
+	cursor: pointer;
 }
 
 #{$module}__duration {
 	color: rgba($text-color, 0.5);
 
-	&:before {
+	&:not(:empty):before {
 		content: ' - ';
 	}
 }

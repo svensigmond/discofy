@@ -6,7 +6,7 @@ $module: '.album-detail';
 	right: 0;
 	bottom: 0;
 	left: 0;
-	z-index: 124;
+	z-index: 3;
 
 	background: $background-color;
 }
@@ -27,7 +27,6 @@ $module: '.album-detail';
 	margin: 0;
 	padding: 0;
 
-	// font-family: pragmatica, Arial, sans-serif;
 	font-size: 0.85em;
 	font-family: pragmatica-condenced, Arial, sans-serif;
 }
@@ -35,7 +34,7 @@ $module: '.album-detail';
 #{$module}__release {
 	position: absolute;
 	bottom: #{-2 * $gutter};
-	z-index: 9;
+	z-index: 1;
 
 	margin: 0;
 	padding: 0;

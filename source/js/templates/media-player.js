@@ -1,5 +1,5 @@
-const template = `<div class="mediaplayer">
-	<audio controls="true" src="{{src}}">
+const template = `<div class="media-player">
+	<audio controls="true" :src="src">
 		Your browser does not support the <code>audio</code> element.
 	</audio>
 </div>`;

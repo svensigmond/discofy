@@ -14,7 +14,7 @@
   grid-area: 1 / 1 / 9 / 9;
   grid-template: repeat(8, 1fr)/repeat(8, 1fr);
   grid-gap: 20px;
-  z-index: 99;
+  z-index: 3;
   pointer-events: none;
   margin: 0;
   width: calc(100% - 40px);
@@ -113,7 +113,8 @@ h3 {
 
 img {
   width: 100%;
-  margin: 0; }
+  margin: 0;
+  vertical-align: top; }
 
 b {
   font-weight: bold; }
@@ -241,7 +242,6 @@ button {
     position: absolute;
     bottom: 19%;
     left: 1%;
-    z-index: 15;
     color: #F0ECCC;
     font-size: 2.5em;
     font-family: pragmatica-extended, Arial, sans-serif;
@@ -314,7 +314,7 @@ button {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 124;
+  z-index: 3;
   background: #F0ECCC; }
 
 .album-detail__info {
@@ -334,7 +334,7 @@ button {
 .album-detail__release {
   position: absolute;
   bottom: -40px;
-  z-index: 9;
+  z-index: 1;
   margin: 0;
   padding: 0;
   color: #F0ECCC;
@@ -345,6 +345,13 @@ button {
   text-align: left; }
   .album-detail__release:before {
     content: '’'; }
+
+.media-player {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: 5;
+  transform: translateX(-50%); }
 
 .tracklist {
   align-self: end;
@@ -361,11 +368,12 @@ button {
   content: attr(data-track-position) "."; }
 
 .tracklist__title {
-  margin-left: 4px; }
+  margin-left: 4px;
+  cursor: pointer; }
 
 .tracklist__duration {
   color: rgba(51, 95, 105, 0.5); }
-  .tracklist__duration:before {
+  .tracklist__duration:not(:empty):before {
     content: ' - '; }
 
 .btn--link {
@@ -385,7 +393,7 @@ button {
     width: 216px; }
 
 .close {
-  z-index: 999;
+  z-index: 5;
   text-align: right; }
 
 .search {
@@ -393,7 +401,7 @@ button {
   pointer-events: visible;
   border-bottom: 4px #335F69 solid;
   background: #F0ECCC;
-  z-index: 99; }
+  z-index: 1; }
   .search input {
     display: block;
     width: 100%;

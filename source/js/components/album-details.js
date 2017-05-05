@@ -21,7 +21,7 @@ const albumDetails = Vue.component('component-album-details', {
 						return;
 					}
 
-					eventbus.emit('mediaplayer:change', [previewUrl]);
+					eventbus.$emit('mediaplayer:change', previewUrl);
 				});
 		},
 

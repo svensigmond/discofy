@@ -1,0 +1,11 @@
+$module: '.media-player';
+
+#{$module} {
+	position: fixed;
+	top: 0;
+	left: 50%;
+
+	z-index: 5;
+
+	transform: translateX(-50%);
+}

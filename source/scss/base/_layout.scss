@@ -19,7 +19,7 @@
 		grid-area: 1 / 1 / 9 / 9;
 		grid-template: repeat(8, 1fr) / repeat(8, 1fr);
 		grid-gap: $gutter;
-		z-index: 99;
+		z-index: 3;
 		pointer-events: none;
 		margin: 0;
 		width: calc(100% - #{2 * $gutter});
