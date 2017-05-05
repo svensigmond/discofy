@@ -7,33 +7,13 @@
 //atoms
 @import 'base/base';
 
-//molecules
+@import 'modules/button';
 @import 'modules/collection';
-
-//pages
 @import 'modules/album';
-@import 'modules/album-overview';
+@import 'modules/albums';
 @import 'modules/album-detail';
 @import 'modules/media-player';
 @import 'modules/tracklist';
-
-// atoms
-.btn {
-	&--link{
-		background: none;
-		color: $text-color;
-	}
-
-	&--icon-only {
-		border: none;
-	}
-
-	&--l {
-		img, svg {
-			width: 24px;
-		}
-	}
-}
 
 .logo {
 	&--small {

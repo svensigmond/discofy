@@ -42,12 +42,12 @@ const template = `<div class="album-detail container">
 					<div class="album-detail__release">{{details.yearShort}}</div>
 					<div class="album-detail__close" v-on:click="onClose">
 						<span class="btn--l btn--link btn--icon-only">
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16"><polygon points="15.71 1.71 14.29 0.29 8 6.59 1.71 0.29 0.29 1.71 6.59 8 0.29 14.29 1.71 15.71 8 9.41 14.29 15.71 15.71 14.29 9.41 8 15.71 1.71" fill="currentColor"></polygon></svg>
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16">
+								<polygon points="15.71 1.71 14.29 0.29 8 6.59 1.71 0.29 0.29 1.71 6.59 8 0.29 14.29 1.71 15.71 8 9.41 14.29 15.71 15.71 14.29 9.41 8 15.71 1.71" fill="currentColor">
+								</polygon>
+							</svg>
 						</span>
 					</div>
 				</div>`;
 
 export default template;
-
-
-

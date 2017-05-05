@@ -90,7 +90,7 @@ html {
   margin: 0;
   padding: 0;
   font-family: pragmatica, Arial, sans-serif;
-  background: #F0ECCC; }
+  background: #f0eeee; }
 
 *, *:before, *:after {
   box-sizing: inherit; }
@@ -100,7 +100,7 @@ body {
   height: calc(100vh - 2 * 20px);
   margin: 20px;
   padding: 0;
-  color: #335F69; }
+  color: #335f69; }
 
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
@@ -120,23 +120,34 @@ b {
   font-weight: bold; }
 
 a {
-  color: #335F69;
+  color: #335f69;
   text-decoration: underline; }
 
 button {
   margin: 0;
   padding: 5px;
-  color: #335F69;
+  color: #335f69;
   font-size: 1em;
   line-height: 1;
-  background-color: #F0ECCC;
+  background-color: #f0eeee;
   border: none;
-  border-left: 4px #335F69 solid;
+  border-left: 4px #335f69 solid;
   outline: none;
   cursor: pointer; }
   button img,
   button svg {
     width: 16px; }
+
+.btn--link {
+  color: #335f69;
+  background: none; }
+
+.btn--icon-only {
+  border: none; }
+
+.btn--l img,
+.btn--l svg {
+  width: 24px; }
 
 .collection {
   align-self: start;
@@ -242,7 +253,7 @@ button {
     position: absolute;
     bottom: 19%;
     left: 1%;
-    color: #F0ECCC;
+    color: #f0eeee;
     font-size: 2.5em;
     font-family: pragmatica-extended, Arial, sans-serif;
     font-weight: bold;
@@ -258,18 +269,18 @@ button {
 .albums__account {
   text-align: right; }
   .albums__account h1 {
-    font-size: 60px;
-    line-height: 1.5;
     margin: 0;
-    padding: 0; }
+    padding: 0;
+    font-size: 60px;
+    line-height: 1.5; }
     .albums__account h1:after {
-      content: "’s collection"; }
+      content: '’s collection'; }
   .albums__account span {
     margin-left: 20px; }
 
 .albums__navigation {
-  pointer-events: visible;
-  margin-top: 20px; }
+  margin-top: 20px;
+  pointer-events: visible; }
   .albums__navigation ol {
     display: flex;
     flex-wrap: wrap;
@@ -277,17 +288,16 @@ button {
     list-style: none; }
     .albums__navigation ol li {
       display: inline-flex;
-      margin: 0;
+      margin: 0 0 20px;
       padding: 0;
-      margin-bottom: 20px;
-      border-top: 4px #335F69 solid; }
+      border-top: 4px #335f69 solid; }
       .albums__navigation ol li a {
+        margin: 0;
         padding: 10px;
-        text-decoration: none;
-        margin: 0; }
+        text-decoration: none; }
         .albums__navigation ol li a.active, .albums__navigation ol li a:hover {
-          background: #335F69;
-          color: #F0ECCC; }
+          color: #f0eeee;
+          background: #335f69; }
 
 .albums__controls {
   position: relative;
@@ -295,15 +305,15 @@ button {
   .albums__controls .sort-btn {
     display: block;
     width: 100%;
-    text-align: left;
+    margin: 0;
     line-height: 2;
-    margin: 0; }
+    text-align: left; }
     .albums__controls .sort-btn:hover {
-      background: #335F69;
-      color: #F0ECCC; }
+      color: #f0eeee;
+      background: #335f69; }
   .albums__controls .active {
-    background: #335F69;
-    color: #F0ECCC; }
+    color: #f0eeee;
+    background: #335f69; }
   .albums__controls h3 {
     padding: 10px 0;
     line-height: 2; }
@@ -315,7 +325,7 @@ button {
   bottom: 0;
   left: 0;
   z-index: 3;
-  background: #F0ECCC; }
+  background: #f0eeee; }
 
 .album-detail__info {
   position: relative;
@@ -323,7 +333,7 @@ button {
   padding: 30px;
   font-size: 60px;
   line-height: 1;
-  outline: 4px #335F69 solid; }
+  outline: 4px #335f69 solid; }
 
 .album-detail__format {
   margin: 0;
@@ -337,7 +347,7 @@ button {
   z-index: 1;
   margin: 0;
   padding: 0;
-  color: #F0ECCC;
+  color: #f0eeee;
   font-size: 13em;
   font-family: pragmatica, Arial, sans-serif;
   font-weight: bold;
@@ -376,16 +386,6 @@ button {
   .tracklist__duration:not(:empty):before {
     content: ' - '; }
 
-.btn--link {
-  background: none;
-  color: #335F69; }
-
-.btn--icon-only {
-  border: none; }
-
-.btn--l img, .btn--l svg {
-  width: 24px; }
-
 .logo--small {
   text-align: right;
   align-self: center; }
@@ -399,8 +399,8 @@ button {
 .search {
   position: relative;
   pointer-events: visible;
-  border-bottom: 4px #335F69 solid;
-  background: #F0ECCC;
+  border-bottom: 4px #335f69 solid;
+  background: #f0eeee;
   z-index: 1; }
   .search input {
     display: block;
@@ -410,7 +410,7 @@ button {
     border: none;
     background: none;
     font-family: "pragmatica-extended", Arial, sans-serif;
-    color: #335F69;
+    color: #335f69;
     font-size: 1em; }
     .search input:focus {
       box-shadow: none;

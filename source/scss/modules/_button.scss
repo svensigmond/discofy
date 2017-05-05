@@ -1,0 +1,20 @@
+$module: '.btn';
+
+#{$module} {
+	&--link {
+		color: $text-color;
+
+		background: none;
+	}
+
+	&--icon-only {
+		border: none;
+	}
+
+	&--l {
+		img,
+		svg {
+			width: 24px;
+		}
+	}
+}
