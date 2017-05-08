@@ -9,8 +9,8 @@ const albumDetails = Vue.component('component-album-details', {
 	methods: {
 		clickTrack(track) {
 			const { details } = this;
-			const artists = details.artists.join();
-			const query = `${artists} ${track}`;
+			const artists = details.artists.join(', ');
+			const query = `${artists} - ${track}`;
 
 			Spotify.searchTrack(query)
 				.then((response) => {
@@ -21,7 +21,7 @@ const albumDetails = Vue.component('component-album-details', {
 						return;
 					}
 
-					eventbus.$emit('mediaplayer:change', previewUrl);
+					eventbus.$emit('mediaplayer:change', previewUrl, query);
 				});
 		},
 

@@ -50,7 +50,7 @@
             </div>
             <component-album-details v-if="showDetails" v-bind:details="details"></component-album-details>
 
-            <component-media-player v-if="collection.length" :src="mediaUrl"></component-media-player>
+            <component-media-player v-if="collection.length" v-bind:media="media"></component-media-player>
         </div>
 
         <script src="/dist/js/bundle.js"></script>

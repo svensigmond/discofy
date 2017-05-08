@@ -1,5 +1,15 @@
 $module: '.media-player';
 
+@keyframes marquee {
+	from {
+		transform: translateX(0);
+	}
+
+	to {
+		transform: translateX(-100%);
+	}
+}
+
 #{$module} {
 	position: fixed;
 	top: 0;
@@ -8,4 +18,39 @@ $module: '.media-player';
 	z-index: 5;
 
 	transform: translateX(-50%);
+
+	overflow: hidden;
+
+	width: 20rem;
+	padding: 1rem 0;
+
+	color: white;
+
+	background: blue;
+
+	.is-active {
+		color: red;
+	}
+}
+
+#{$module}__current {
+	display: inline-block;
+
+	h2 {
+		padding-right: 1rem;
+
+		white-space: nowrap;
+
+		animation: 10s infinite marquee linear;
+
+		will-change: contents;
+
+		&:after {
+			position: absolute;
+
+			padding-left: 1rem;
+
+			content: attr(data-current);
+		}
+	}
 }

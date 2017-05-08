@@ -17055,7 +17055,7 @@ var discollection = new _vue2.default({
 			},
 			details: {},
 			showDetails: false,
-			mediaUrl: ''
+			media: {}
 		};
 	},
 	init: function init() {
@@ -17071,8 +17071,11 @@ var discollection = new _vue2.default({
 	mounted: function mounted() {
 		var _this = this;
 
-		_eventbus2.default.$on('mediaplayer:change', function (url) {
-			_this.mediaUrl = url;
+		_eventbus2.default.$on('mediaplayer:change', function (url, track) {
+			_this.media = {
+				track: track,
+				url: url
+			};
 		});
 
 		_eventbus2.default.$on('detail:close', function () {
@@ -17240,8 +17243,8 @@ var albumDetails = _vue2.default.component('component-album-details', {
 		clickTrack: function clickTrack(track) {
 			var details = this.details;
 
-			var artists = details.artists.join();
-			var query = artists + ' ' + track;
+			var artists = details.artists.join(', ');
+			var query = artists + ' - ' + track;
 
 			_spotify2.default.searchTrack(query).then(function (response) {
 				var tracks = response.tracks.items;
@@ -17251,7 +17254,7 @@ var albumDetails = _vue2.default.component('component-album-details', {
 					return;
 				}
 
-				_eventbus2.default.$emit('mediaplayer:change', previewUrl);
+				_eventbus2.default.$emit('mediaplayer:change', previewUrl, query);
 			});
 		},
 		onClose: function onClose() {
@@ -17337,26 +17340,74 @@ var _mediaPlayer2 = _interopRequireDefault(_mediaPlayer);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mediaPlayer = _vue2.default.component('component-media-player', {
-	props: ['src'],
-	template: _mediaPlayer2.default,
-	mounted: function mounted() {
-		this.player = this.$el.querySelector('audio');
+	props: ['media'],
+	data: function data() {
+		return {
+			active: null,
+			playlist: [],
+			player: new Audio()
+		};
 	},
 
+	template: _mediaPlayer2.default,
 	watch: {
-		src: function src() {
+		active: function active(index) {
 			// eslint-disable-line object-shorthand
-			this.playAudio();
+			this.play(index);
+		},
+		media: function media() {
+			// eslint-disable-line object-shorthand
+			this.start();
 		}
 	},
 	methods: {
-		playAudio: function playAudio() {
-			var player = this.player;
+		start: function start() {
+			var media = this.media,
+			    player = this.player,
+			    playlist = this.playlist;
 
+
+			if (!playlist.length) {
+				player.src = media.url;
+
+				this.active = 0;
+			}
+
+			playlist.push(media);
+		},
+		play: function play(index) {
+			var _this = this;
+
+			var player = this.player,
+			    playlist = this.playlist;
+
+
+			player.src = playlist[index].url;
 
 			player.oncanplaythrough = function () {
 				return player.play();
 			};
+
+			player.onended = function () {
+				return _this.end();
+			};
+		},
+		pause: function pause() {
+			this.player.pause();
+		},
+		end: function end() {
+			var active = this.active,
+			    playlist = this.playlist;
+
+
+			if (active + 1 === playlist.length) {
+				return;
+			}
+
+			++this.active;
+		},
+		clickTrack: function clickTrack(index) {
+			this.active = index;
 		}
 	}
 });
@@ -17413,7 +17464,7 @@ exports.default = template;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-var template = "<div class=\"media-player\">\n\t<audio controls=\"true\" :src=\"src\">\n\t\tYour browser does not support the <code>audio</code> element.\n\t</audio>\n</div>";
+var template = "<div class=\"media-player\">\n\t<div class=\"media-player__current\">\n\t\t<h2 :data-current=\"playlist[active].track\" v-if=\"playlist.length\">{{playlist[active].track}}</h2>\n\t</div>\n\t<div class=\"media-player__playlist\">\n\t\t<ol v-if=\"playlist.length\">\n\t\t\t<li v-for=\"(media, index) in playlist\" v-bind:class=\"{'is-active': index === active }\" v-on:click=\"clickTrack(index)\">{{media.track}}</li>\n\t\t</ol>\n\t</div>\n\t<button v-on:click=\"start\">\u25B6\uFE0F</button><button v-on:click=\"pause\">\u23F8\uFE0F</button>\n</div>";
 
 exports.default = template;
 

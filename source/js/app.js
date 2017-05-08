@@ -41,7 +41,7 @@ const discollection = new Vue({
 			},
 			details: {},
 			showDetails: false,
-			mediaUrl: '',
+			media: {},
 		};
 	},
 
@@ -56,8 +56,11 @@ const discollection = new Vue({
 		}
 	},
 	mounted() {
-		eventbus.$on('mediaplayer:change', (url) => {
-			this.mediaUrl = url;
+		eventbus.$on('mediaplayer:change', (url, track) => {
+			this.media = {
+				track,
+				url,
+			};
 		});
 
 		eventbus.$on('detail:close', () => {

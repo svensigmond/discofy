@@ -3,8 +3,6 @@
 @import 'base/variables';
 @import 'base/layout';
 
-//atomic
-//atoms
 @import 'base/base';
 
 @import 'modules/button';
@@ -30,6 +28,7 @@
 
 .close {
 	z-index: 5;
+
 	text-align: right;
 }
 
@@ -38,32 +37,37 @@
 
 .search {
 	position: relative;
-	pointer-events: visible;
-	border-bottom: $line-width-l $text-color solid;
-	background: $background-color;
 	z-index: 1;
+
+	background: $background-color;
+	border-bottom: $line-width-l $text-color solid;
+
+	pointer-events: visible;
 
 	input {
 		display: block;
+
 		width: 100%;
-		padding: $gutter 0;
 		margin: 0;
-		border: none;
-		background: none;
-		font-family:  "pragmatica-extended", Arial, sans-serif;
+		padding: $gutter 0;
+
 		color: $text-color;
+		font-family: inherit;
 		font-size: 1em;
 
+		background: none;
+		border: none;
+
 		&:focus {
-			box-shadow: none;
 			outline: none;
+			box-shadow: none;
 		}
 	}
 
 	button {
 		position: absolute;
-		right: 0;
 		top: $gutter / 2;
+		right: 0;
 	}
 }
 

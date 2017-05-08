@@ -2,7 +2,7 @@
   "name": "discofy",
   "version": "0.2.10",
   "scripts": {
-    "lint": "stylelint source/scss/**/*.scss && eslint source/js/**/*.js",
+    "lint": "stylelint source/scss/**/*.scss",
     "build:clean": "rimraf dist/css/*, dist/js/*",
     "prebuild": "npm run build:clean",
     "build": "npm run sass:build && npm run build:bundle",
